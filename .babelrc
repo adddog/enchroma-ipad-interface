@@ -1,0 +1,43 @@
+{
+  "ignore": [
+    "node_modules",
+    "node_modules/*",
+    "node_modules/*/**"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias":
+        {
+          "elements": "./client/js/elements",
+          "views": "./client/js/views",
+          "lib": "./client/js/lib"
+        }
+      }
+    ],
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread"
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets":
+        {
+          "browsers": [
+            "> 1%",
+            "last 2 versions",
+            "not ie <= 8"
+          ]
+        }
+      }
+    ]
+  ]
+}

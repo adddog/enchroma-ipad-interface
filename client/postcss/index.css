@@ -1,0 +1,8 @@
+@import 'normalize.css';
+@import 'tachyons';
+@import 'bulma-slider/dist/css/bulma-slider.min.css';
+
+body{
+  min-height: 100vh;
+}
+
