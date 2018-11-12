@@ -1,8 +1,16 @@
 import { cover, contain } from 'intrinsic-scale'
-import { GREY_NEUTRAL } from 'lib/constants'
-import { hsv2rgb, xy2polar, rad2deg, getRGBString } from 'lib/drawing-helpers'
+import { GREY_NEUTRAL, CIRCLE_MARGIN } from 'lib/constants'
+import {
+  hsv2rgb,
+  xy2polar,
+  rad2deg,
+  getRGBString,
+  addTouchEvents,
+  touchesToPolar,
+} from 'lib/drawing-helpers'
+import AppStore from 'lib/store'
 
-function drawCircle(ctx, radius) {
+function drawCircle(ctx, radius, options) {
   let image = ctx.createImageData(2 * radius, 2 * radius)
   let data = image.data
 
@@ -10,7 +18,6 @@ function drawCircle(ctx, radius) {
     for (let y = -radius; y < radius; y++) {
       let [r, phi] = xy2polar(x, y)
       let deg = rad2deg(phi)
-
       // Figure out the starting index of this pixel in the image data array.
       let rowLength = 2 * radius
       let adjustedX = x + radius // convert x from [-50, 50] to [0, 100] (the coordinates of the image data array)
@@ -26,7 +33,6 @@ function drawCircle(ctx, radius) {
         data[index + 3] = 255
         continue
       }
-
 
       let hue = deg
       let saturation = r / radius
@@ -45,22 +51,36 @@ function drawCircle(ctx, radius) {
   ctx.putImageData(image, 0, 0)
 }
 
+function calculateTouchPoint(evt) {
+  const domRect = AppStore.getValue('canvas:domrect')
+  const { clientX, clientY } = evt.touches[0]
+  const xPos = (clientX - domRect.x) / domRect.width - 0.5
+  const yPos = (clientY - domRect.y) / domRect.height - 0.5
+  let [r, phi] = xy2polar(xPos, yPos)
+  let deg = rad2deg(phi)
+  console.log(deg, r);
+}
+
 module.exports = function() {
   let ctx
-  function init(el) {
+  function init(el, { width, height }) {
     ctx = el.getContext('2d')
     ctx.fillStyle = getRGBString(GREY_NEUTRAL)
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
-    const s = Math.min(el.width, el.height)
-    let { width, height, x, y } = contain(el.width, el.height, s, s)
-    drawCircle(ctx, width / 2 - 20)
+    drawCircle(ctx, width / 2)
+    addTouchEvents(el, {
+      move: calculateTouchPoint,
+      start: e => {
+        console.log(e)
+      },
+    })
   }
   function draw() {
-    ctx.fillStyle = getRGBString(GREY_NEUTRAL)
+    /* ctx.fillStyle = getRGBString(GREY_NEUTRAL)
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
     const s = Math.min(el.width, el.height)
     let { width, height, x, y } = contain(el.width, el.height, s, s)
-    drawCircle(ctx, width / 2 - 20)
+    drawCircle(ctx, width / 2 - CIRCLE_MARGIN)*/
   }
   return {
     init,

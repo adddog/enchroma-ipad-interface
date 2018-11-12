@@ -1,8 +1,9 @@
 import { isUndefined } from 'lodash'
+import touch from 'touches'
 export function getRGBString(r, g, b) {
   g = isUndefined(g) ? r : g
   b = isUndefined(b) ? r : b
-  return `rgb(${r},${g},${b})`
+  return `rgb(${r},${g},${b});`
 }
 
 export function hsv2rgb(hue, saturation, value) {
@@ -41,4 +42,26 @@ export function xy2polar(x, y) {
 // return degree in [0, 360] range
 export function rad2deg(rad) {
   return ((rad + Math.PI) / (2 * Math.PI)) * 360
+}
+
+export function addTouchEvents(el, callbacks) {
+  touch(window, { target: el, filtered: true })
+    .on('start', callbacks.start)
+    .on('move', callbacks.move)
+    .on('end', e => {})
+  /*const eventListener = touchEvents.default.createListener(el)
+  eventListener.addEventListener('dragstart', callbacks.dragstart)
+  eventListener.addEventListener('drag', e => {
+    console.log(e)
+  })
+  eventListener.addEventListener('dragend', callbacks.dragend)*/
+}
+
+export function touchesToPolar(e) {
+  const {clientX, clientY} = e.touches[0]
+  console.log(e.touches[0]);
+  //xy2polar2(clientX, clientY)
+  //let [r, phi] = xy2polar(clientX, clientY)
+  //let deg = rad2deg(phi)
+  //console.log(deg);
 }

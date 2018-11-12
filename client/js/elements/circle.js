@@ -1,8 +1,12 @@
+import { cover, contain } from 'intrinsic-scale'
 import Nanocomponent from 'nanocomponent'
+import { GREY_NEUTRAL, CIRCLE_MARGIN } from 'lib/constants'
 import AppEmitter from 'lib/emitter'
+import { getRGBString } from 'lib/drawing-helpers'
 import { autobind } from 'core-decorators'
 import html from 'choo/html'
 import Logic from './circle-logic'
+import AppStore from 'lib/store'
 
 class Component extends Nanocomponent {
   constructor() {
@@ -20,16 +24,20 @@ class Component extends Nanocomponent {
   createElement() {
     this.logic = Logic()
     return html`
-        <canvas class="w-100 h-100"></canvas>
+        <canvas class="circle-canvas"></canvas>
       `
   }
 
   load(el) {
     this.el = el
     this.parentNode = el.parentNode
-    this.el.width = this.parentNode.offsetWidth
-    this.el.height = this.parentNode.offsetHeight
-    this.logic.init(el)
+    const s =
+      Math.min(this.parentNode.offsetWidth, this.parentNode.offsetHeight) -
+      CIRCLE_MARGIN
+    this.el.width = s
+    this.el.height = s
+    AppStore.setValue('canvas:domrect', el.getBoundingClientRect())
+    this.logic.init(el, { width: s, height: s })
   }
 
   update() {
@@ -40,7 +48,9 @@ const circle = new Component()
 
 module.exports = (state, emit) => {
   return html`
-        <article class="w-80 h-100">
+        <article class="column h-100 interface-col circle-container" style="background-color: ${getRGBString(
+          GREY_NEUTRAL,
+        )}">
           ${circle.render(state, emit)}
         </article>
       `

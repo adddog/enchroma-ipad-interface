@@ -1,8 +1,13 @@
 @import 'normalize.css';
 @import 'tachyons';
+@import 'spectre.css';
 @import 'bulma-slider/dist/css/bulma-slider.min.css';
+@import './views/interface';
 
 body{
   min-height: 100vh;
 }
 
+.app{
+  overflow: hidden;
+}

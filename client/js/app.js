@@ -28,10 +28,11 @@ if (!isProd) {
 
 app.use(Model)
 
+      //class="absolute app w-100 h-100 sans-serif bg-white"
 function mainView(state, prev, send) {
   return html`
     <main
-      class="absolute app w-100 h-100 sans-serif bg-white"
+      class="absolute app w-100 h-100"
       onload=${onload}
     >
       ${interfaceView(state, prev, send)}
