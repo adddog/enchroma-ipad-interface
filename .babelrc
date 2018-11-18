@@ -12,7 +12,8 @@
         {
           "elements": "./client/js/elements",
           "views": "./client/js/views",
-          "lib": "./client/js/lib"
+          "lib": "./client/js/lib",
+          "gl": "./client/js/gl"
         }
       }
     ],

@@ -42,7 +42,7 @@ class Component extends Nanocomponent {
 
     this.slider = el
     this.slider.addEventListener('input', e => {
-      console.log(e.target.value)
+      AppEmitter.emit('slider:brightnes', parseFloat(e.target.value))
     })
   }
 

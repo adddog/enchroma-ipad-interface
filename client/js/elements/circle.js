@@ -2,6 +2,7 @@ import { cover, contain } from 'intrinsic-scale'
 import Nanocomponent from 'nanocomponent'
 import { GREY_NEUTRAL, CIRCLE_MARGIN } from 'lib/constants'
 import AppEmitter from 'lib/emitter'
+import GL from 'gl'
 import { getRGBString } from 'lib/drawing-helpers'
 import { autobind } from 'core-decorators'
 import html from 'choo/html'
@@ -22,7 +23,7 @@ class Component extends Nanocomponent {
   }
 
   createElement() {
-    this.logic = Logic()
+    //this.logic = Logic()
     return html`
         <canvas class="circle-canvas"></canvas>
       `
@@ -36,8 +37,10 @@ class Component extends Nanocomponent {
       CIRCLE_MARGIN
     this.el.width = s
     this.el.height = s
-    AppStore.setValue('canvas:domrect', el.getBoundingClientRect())
-    this.logic.init(el, { width: s, height: s })
+    GL.init(this.el)
+
+    /*AppStore.setValue('canvas:domrect', el.getBoundingClientRect())
+    this.logic.init(el, { width: s, height: s })*/
   }
 
   update() {
