@@ -1,0 +1,34 @@
+import html from 'choo/html'
+import Nanocomponent from 'nanocomponent'
+import { GREY_NEUTRAL } from 'c:/constants'
+import { getRGBString } from 'i:lib/drawing-helpers'
+import { getActiveTestName } from 'i:selectors'
+import AppStore from 'c:/store'
+import Circle from 'i:elements/circle'
+import Slider from 'i:elements/slider'
+
+const renderInterface = (state, emit) => {
+  console.log(state);
+ const activeTestName = getActiveTestName(state)
+ switch (activeTestName) {
+  case 'after-image':
+   return html`
+    ${Slider(state, emit)} ${Circle(state, emit)}
+   `
+  default:
+   return html`
+    <p class="p-absolute pos-tl c-white">interface</p>
+    <h1><mark>waiting for a test...</mark></h1>
+   `
+ }
+}
+module.exports = (state, emit) => {
+ return html`
+  <article
+   class="w-100 h-100 black-80 columns interface-view flex-c"
+   style="background-color: ${getRGBString(GREY_NEUTRAL)}"
+  >
+   ${renderInterface(state, emit)}
+  </article>
+ `
+}

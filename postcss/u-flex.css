@@ -1,0 +1,60 @@
+/* ************
+*  flex
+************ */
+
+.u-flex {
+  display: flex;
+}
+
+.u-flex--stack {
+  flex-direction: column;
+}
+
+.u-flex--seq {
+  flex-direction: row;
+}
+
+.u-flex--wrap {
+  flex-wrap: wrap;
+}
+
+.u-flex--center,
+.u-flex--c {
+  align-items: center;
+  justify-content: center;
+}
+
+.u-flex--start {
+  align-items: start;
+  justify-content: start;
+}
+
+.u-flex--left {
+  justify-content: start;
+}
+
+.u-flex--end {
+  align-items: flex-end;
+}
+
+.u-flex--right {
+  justify-content: flex-end;
+}
+
+.u-flex--end--seq,
+.u-flex--end--column {
+  justify-content: flex-end;
+}
+
+.u-flex--space {
+  justify-content: space-between;
+}
+.u-flex--space-around {
+  justify-content: space-around;
+}
+
+.u-flex--grow,
+.u-flex--fill {
+  flex-grow: 1;
+}
+

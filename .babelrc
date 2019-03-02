@@ -10,10 +10,26 @@
       {
         "alias":
         {
-          "elements": "./client/js/elements",
-          "views": "./client/js/views",
-          "lib": "./client/js/lib",
-          "gl": "./client/js/gl"
+
+          "c:": "./ipads/common",
+
+          "i:": "./ipads/interface/js",
+          "i:elements": "./ipads/interface/js/elements",
+          "i:views": "./ipads/interface/js/views",
+          "i:selectors": "./ipads/interface/js/selectors",
+          "i:lib": "./ipads/interface/js/lib",
+          "i:gl": "./ipads/interface/js/gl",
+
+          "exp:elements": "./ipads/experiment/js/elements",
+          "exp:views": "./ipads/experiment/js/views",
+          "exp:lib": "./ipads/experiment/js/lib",
+          "exp:logic": "./ipads/experiment/js/logic",
+
+          "el:elements": "./electron/js/elements",
+          "el:views": "./electron/js/views",
+          "el:selectors": "./electron/js/selectors",
+          "el:lib": "./electron/js/lib",
+          "el:gl": "./electron/js/gl"
         }
       }
     ],

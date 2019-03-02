@@ -1,0 +1,21 @@
+.interface-view {
+  margin: 0;
+}
+
+.interface-col {
+  padding: 0;
+}
+
+.circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle-canvas {
+}
+
+.rotate-90 {
+  transform: rotate(90deg) translateY(100%);
+  transform-origin: 0% 0%;
+}
