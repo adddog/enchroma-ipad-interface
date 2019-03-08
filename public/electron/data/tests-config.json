@@ -5,26 +5,11 @@
   "data": {
    "phases": [
     {
-     "TEST_NAME": "PRACTICE",
-     "USE_HSL": true,
-     "STARE_DURATION": 15000,
-     "MATCH_DURATION": 10000,
-     "RESET_DURATION": 5000,
-     "WHITE": [255, 255, 255],
-     "BACKGROUND_GREY": [128, 128, 128],
-     "RGB_TEST_VALUES": [
-      [25, 25, 255],
-      [25, 25, 255],
-      [25, 25, 255],
-      [25, 25, 255]
-     ]
-    },
-    {
      "TEST_NAME": "RRRR",
      "USE_HSL": true,
-     "STARE_DURATION": 45000,
-     "MATCH_DURATION": 15000,
-     "RESET_DURATION": 10000,
+     "STARE_DURATION": 2000,
+     "MATCH_DURATION": 10000,
+     "RESET_DURATION": 0,
      "WHITE": [255, 255, 255],
      "BACKGROUND_GREY": [128, 128, 128],
      "RGB_TEST_VALUES": [
@@ -37,9 +22,9 @@
     {
      "TEST_NAME": "RDESAT",
      "USE_HSL": true,
-     "STARE_DURATION": 45000,
-     "MATCH_DURATION": 15000,
-     "RESET_DURATION": 10000,
+     "STARE_DURATION": 2000,
+     "MATCH_DURATION": 10000,
+     "RESET_DURATION": 0,
      "WHITE": [255, 255, 255],
      "BACKGROUND_GREY": [128, 128, 128],
      "RGB_TEST_VALUES": [
@@ -52,9 +37,9 @@
     {
      "TEST_NAME": "GGGG",
      "USE_HSL": true,
-     "STARE_DURATION": 45000,
-     "MATCH_DURATION": 15000,
-     "RESET_DURATION": 10000,
+     "STARE_DURATION": 2000,
+     "MATCH_DURATION": 10000,
+     "RESET_DURATION": 0,
      "WHITE": [200, 200, 200],
      "BACKGROUND_GREY": [128, 128, 128],
      "RGB_TEST_VALUES": [
@@ -67,9 +52,9 @@
     {
      "TEST_NAME": "GDESAT",
      "USE_HSL": true,
-     "STARE_DURATION": 45000,
-     "MATCH_DURATION": 15000,
-     "RESET_DURATION": 10000,
+     "STARE_DURATION": 2000,
+     "MATCH_DURATION": 10000,
+     "RESET_DURATION": 0,
      "WHITE": [200, 200, 200],
      "BACKGROUND_GREY": [128, 128, 128],
      "RGB_TEST_VALUES": [
@@ -82,9 +67,9 @@
     {
      "TEST_NAME": "MMMMM",
      "USE_HSL": true,
-     "STARE_DURATION": 45000,
-     "MATCH_DURATION": 15000,
-     "RESET_DURATION": 10000,
+     "STARE_DURATION": 2000,
+     "MATCH_DURATION": 10000,
+     "RESET_DURATION": 0,
      "WHITE": [200, 200, 200],
      "BACKGROUND_GREY": [147, 147, 147],
      "RGB_TEST_VALUES": [
@@ -97,9 +82,9 @@
     {
      "TEST_NAME": "MDESAT",
      "USE_HSL": true,
-     "STARE_DURATION": 45000,
-     "MATCH_DURATION": 15000,
-     "RESET_DURATION": 10000,
+     "STARE_DURATION": 2000,
+     "MATCH_DURATION": 10000,
+     "RESET_DURATION": 0,
      "WHITE": [200, 200, 200],
      "BACKGROUND_GREY": [147, 147, 147],
      "RGB_TEST_VALUES": [

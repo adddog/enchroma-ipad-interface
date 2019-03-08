@@ -11,25 +11,25 @@
         "alias":
         {
 
-          "c:": "./ipads/common",
+          "c:": "./src/common",
 
-          "i:": "./ipads/interface/js",
-          "i:elements": "./ipads/interface/js/elements",
-          "i:views": "./ipads/interface/js/views",
-          "i:selectors": "./ipads/interface/js/selectors",
-          "i:lib": "./ipads/interface/js/lib",
-          "i:gl": "./ipads/interface/js/gl",
+          "i:": "./src/ipads/interface/js",
+          "i:elements": "./src/ipads/interface/js/elements",
+          "i:views": "./src/ipads/interface/js/views",
+          "i:selectors": "./src/ipads/interface/js/selectors",
+          "i:lib": "./src/ipads/interface/js/lib",
+          "i:gl": "./src/ipads/interface/js/gl",
 
-          "exp:elements": "./ipads/experiment/js/elements",
-          "exp:views": "./ipads/experiment/js/views",
-          "exp:lib": "./ipads/experiment/js/lib",
-          "exp:logic": "./ipads/experiment/js/logic",
+          "exp:elements": "./src/ipads/experiment/js/elements",
+          "exp:views": "./src/ipads/experiment/js/views",
+          "exp:lib": "./src/ipads/experiment/js/lib",
+          "exp:logic": "./src/ipads/experiment/js/logic",
 
-          "el:elements": "./electron/js/elements",
-          "el:views": "./electron/js/views",
-          "el:selectors": "./electron/js/selectors",
-          "el:lib": "./electron/js/lib",
-          "el:gl": "./electron/js/gl"
+          "el:elements": "./src/electron/js/elements",
+          "el:views": "./src/electron/js/views",
+          "el:selectors": "./src/electron/js/selectors",
+          "el:lib": "./src/electron/js/lib",
+          "el:gl": "./src/electron/js/gl"
         }
       }
     ],

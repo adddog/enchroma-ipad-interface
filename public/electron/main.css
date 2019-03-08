@@ -4927,6 +4927,10 @@ span.CodeMirror-selectedtext { background: none; }
   margin: 0 auto;
 }
 
+.w-50{
+  width: 50%;
+}
+
 /* ************
 *  margin
 ************ */
@@ -5090,4 +5094,10 @@ body{
 .code-editor{
   font-size: 11px;
 }
+
+.live-test-color{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
 /*# sourceMappingURL=main.css.map */

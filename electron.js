@@ -13,7 +13,7 @@ function createWindow() {
   })
 
   if (IS_PROD) {
-    const Server = require('./electron/server')
+    const Server = require('./src/electron/server')
     mainWindow.loadURL(`file://${__dirname}/dist/index.html?renderer=1`)
   } else {
     mainWindow.loadURL(`http://localhost:7788`)
