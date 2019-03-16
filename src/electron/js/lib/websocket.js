@@ -54,6 +54,7 @@ class WS extends WSBase {
  }
 
  setActiveTest(config) {
+  console.log(config);
   this.send(config, 'master:test:set')
  }
 }

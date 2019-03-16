@@ -1,8 +1,8 @@
 import { isProd } from 'c:/constants'
 import AppEmitter from 'c:/emitter'
-import AppStore from 'c:/store'
 import WSBase from 'c:/websocket'
 import safeStringify from 'fast-safe-stringify'
+import WebsocketHandlers from './handlers'
 
 class WS extends WSBase {
  init() {
@@ -23,27 +23,16 @@ class WS extends WSBase {
      window.location.reload()
      break
     case 'master:test:set':
-     {
-      AppStore.setValue('test:set', data)
-      AppEmitter.emit('test:set', data)
-     }
+     WebsocketHandlers.testSet(data)
      break
-    case 'master:test:pause': {
-     AppStore.setValue('test:pause', data)
-      AppStore.testUpdate()
+    case 'master:test:pause':
+     WebsocketHandlers.testPause(data)
      break
-    }
     case 'master:test:stop':
-     {
-      AppStore.setValue('test:stop', data)
-      AppStore.testUpdate()
-     }
+     WebsocketHandlers.testStop(data)
      break
     case 'master:test:update':
-     {
-      AppStore.setValue('test:update', data)
-      AppStore.testUpdate()
-     }
+     WebsocketHandlers.testUpdate(data)
      break
    }
   }

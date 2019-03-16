@@ -1,17 +1,13 @@
 import WebSocket from 'i:lib/websocket'
 import AppEmitter from 'c:/emitter'
-import { postJSON } from 'i:lib/util'
 
-export default (state, emitter) => {
- state.activeTest = {
-  id: 'after-image',
- }
- emitter.emit('render')
+export default async function(state, emitter) {
 
  AppEmitter.on('test:set', data => {
-  state.activeTest = data
+  state.activeTest.data = data
   emitter.emit('render')
  })
 
  AppEmitter.on('render', () => emitter.emit('render'))
+ emitter.emit('render')
 }

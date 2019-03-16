@@ -11,13 +11,19 @@ import {
  CIRCLE_MARGIN,
 } from 'c:/constants'
 import AppStore from 'c:/store'
-import { getRes, getHeight, getWidth } from 'c:/selector'
+import {
+ getRes,
+ getXYFromInterfacePayload,
+ getHeight,
+ getWidth,
+} from 'c:/selector'
 import { isInduction, isMatch, isRest } from 'c:/state-machine'
-import { getActiveTest } from 'i:selectors'
-import Nanocomponent from 'nanocomponent'
+import { getActiveTestBlock } from 'i:selectors'
+import { ConnectedBaseComponent } from './base'
 import Two from 'two.js'
 import CodeMirror from 'codemirror'
 import Logic from './circle-logic'
+import DevLogic from './dev-circle-logic'
 
 const renderOverlay = testBlock => {
  if (!testBlock) return null
@@ -33,65 +39,65 @@ const renderOverlay = testBlock => {
  }
 }
 
-class Overlay extends Nanocomponent {
- createElement(config = {}) {
-  this.config = config
-  const { test } = this.config
+/* ************
+ *  OVERLAY
+ ************ */
+class Overlay extends ConnectedBaseComponent {
+ createElement(testBlock = {}) {
   return html`
    <div
     class="${classnames([
      'p-absolute',
      'full-wh',
      'controls-overlay',
-     { '--inactive': !isMatch(test) },
+     { '--inactive': !isMatch(testBlock) },
     ])}"
    >
-    ${renderOverlay(test)}
+    ${renderOverlay(testBlock)}
    </div>
   `
  }
 
- load(el) {
-  this.el = el
-  const activeTest = getActiveTest(this.config)
-  AppStore.on('update', () => {
-   const testBlock = AppStore.getValue('test:update')
-   this.render(testBlock)
-  })
+ onStoreTestUpdate(testBlock) {
+  this.render(testBlock)
  }
 
  update() {
   return true
  }
 }
-
 const overlay = new Overlay()
 
-class Controls extends Nanocomponent {
- createElement(config, emit) {
-  AppEmitter.on('resize', this.resize)
+/* ************
+ *  CIRCLE
+ ************ */
+class ControlsComponent extends ConnectedBaseComponent {
+ createElement(state) {
+  this.state = {
+   activeTestBlock: getActiveTestBlock(state),
+  }
   if (isDev) {
    AppEmitter.on('touches', this.drawTouchColor)
   }
-  AppStore.on('test:update', () => {
-   const testBlock = AppStore.getValue('test:update')
-   console.log(testBlock);
-   this.logic.setPreviousXY(testBlock.previousXY)
-   if (testBlock && testBlock.test) {
-    this.logic.pause(!isMatch(testBlock.test))
-   }
-
-   if (isDev) {
-    this.addPreviousXY(testBlock)
-   }
-  })
-  this.config = config
-  this.emit = emit
   return html`
    <div class="full-wh">
-    ${overlay.render(config)}
+    ${overlay.render()}
    </div>
   `
+ }
+
+ onStoreTestUpdate(testBlock) {
+  this.logic.setPreviousXY(
+   getXYFromInterfacePayload(AppStore.getValue('interface:touches')),
+  )
+  console.log(testBlock)
+  if (testBlock) {
+   this.logic.pause(!isMatch(testBlock))
+  }
+
+  if (isDev) {
+   //this.addPreviousXY(testBlock)
+  }
  }
 
  @autobind
@@ -128,6 +134,7 @@ class Controls extends Nanocomponent {
 
  @autobind
  addPreviousXY(testBlock) {
+  return
   console.log(testBlock)
   console.log(
    testBlock.previousXY[0] * this.diameter,
@@ -163,7 +170,9 @@ class Controls extends Nanocomponent {
  }
 
  load(el) {
+  super.load(el)
   this.el = el
+  console.log(el);
   AppStore.setValue('canvas:domrect', el.getBoundingClientRect())
 
   var params = {
@@ -177,7 +186,14 @@ class Controls extends Nanocomponent {
   this.logic.init(el, {
    width: this.diameter,
    height: this.diameter,
+   onMove: isDev ? DevLogic.addPoint : null,
+   onEnd: isDev ? DevLogic.touchEnd : null,
   })
+  this.logic.pause(!isMatch(this.state.activeTestBlock))
+
+  if (isDev) {
+   DevLogic.init(this.two)
+  }
  }
 
  update() {
@@ -185,4 +201,4 @@ class Controls extends Nanocomponent {
  }
 }
 
-exports.Controls = Controls
+export const Controls = ControlsComponent

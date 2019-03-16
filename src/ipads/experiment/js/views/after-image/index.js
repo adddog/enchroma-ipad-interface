@@ -1,3 +1,6 @@
+/* ************
+*  NO USE
+************ */
 import Nanocomponent from 'nanocomponent'
 import { autobind } from 'core-decorators'
 import html from 'choo/html'

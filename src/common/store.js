@@ -38,7 +38,7 @@ class Store {
  }
 
  testUpdate() {
-  AppEmitter.emit('test:update')
+  AppEmitter.emit('store:test:update')
  }
 }
 

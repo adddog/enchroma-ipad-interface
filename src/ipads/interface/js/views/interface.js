@@ -1,12 +1,14 @@
 import html from 'choo/html'
 import Nanocomponent from 'nanocomponent'
-import { GREY_NEUTRAL } from 'c:/constants'
+import { isDev, GREY_NEUTRAL } from 'c:/constants'
+import renderButton from 'c:/elements/button'
+import WebsocketHandlers from 'i:lib/websocket/handlers'
 import { getRGBString } from 'i:lib/drawing-helpers'
 import { getActiveTestId } from 'i:selectors'
 import AppStore from 'c:/store'
-import Circle from 'i:elements/circle'
-import {Controls} from 'i:elements/controls'
-import Slider from 'i:elements/slider'
+import { Controls } from 'i:elements/controls'
+
+import renderDevInterface from './dev-interface'
 
 const controlsView = new Controls()
 
@@ -31,7 +33,7 @@ module.exports = (state, emit) => {
    class="w-100 h-100 black-80 columns interface-view flex-c"
    style="background-color: ${getRGBString(GREY_NEUTRAL)}"
   >
-   ${renderInterface(state, emit)}
+   ${renderInterface(state, emit)} ${renderDevInterface(state, emit)}
   </article>
  `
 }

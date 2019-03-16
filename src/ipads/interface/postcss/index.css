@@ -4,6 +4,7 @@
 @import '../../postcss/index';
 @import '../../../postcss/u-flex.css';
 @import '../../../postcss/u-display.css';
+@import '../../../postcss/u-buttons.css';
 
 body {
  min-height: 100vh;
@@ -33,7 +34,7 @@ body {
   }
 
   &.--inactive {
-   pointer-events: auto;
+   pointer-events: none;
    &:after {
     opacity: 0.7;
    }

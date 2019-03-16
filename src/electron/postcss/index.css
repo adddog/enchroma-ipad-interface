@@ -3,6 +3,7 @@
 @import 'codemirror/lib/codemirror.css';
 @import '../../postcss/u-flex.css';
 @import '../../postcss/u-display.css';
+@import '../../postcss/u-buttons.css';
 @import './views/interface';
 
 body{

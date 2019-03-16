@@ -4931,6 +4931,16 @@ span.CodeMirror-selectedtext { background: none; }
   width: 50%;
 }
 
+.p-tl{
+  top:0;
+  left:0;
+}
+
+.p-tr{
+  top:0;
+  right:0;
+}
+
 /* ************
 *  margin
 ************ */
@@ -5032,6 +5042,11 @@ span.CodeMirror-selectedtext { background: none; }
 
 .--clickable {
   cursor: pointer;
+}
+
+.b-btn{
+  min-width: 30px;
+  min-height: 30px;
 }
 
 .interface-view {

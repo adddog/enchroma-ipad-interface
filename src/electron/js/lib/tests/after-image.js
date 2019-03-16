@@ -1,5 +1,7 @@
 import AppEmitter from 'c:/emitter'
 import StateMachine from 'c:/state-machine'
+import { parseTestConfig } from 'c:/test-configs'
+import { getActiveTestData } from 'el:selectors'
 import { noop } from 'lodash'
 import loop from 'raf-loop'
 
@@ -19,53 +21,8 @@ export default function() {
  //***********
  // internal setup function
  //***********
- function setTestTimings() {
-  var _time = 0
-  state.activeTest.data.phases.forEach(function(testBlock, i) {
-   _time += testBlock.STARE_DURATION
-   /*
-      Testing testObject
-      */
-   state.sequence.push({
-    ...testBlock,
-    stateMachine: StateMachine.INDUCTION,
-    endTime: _time,
-    leftCircleRGB: testBlock,
-    rightCircleRGB: testBlock.BACKGROUND_GREY,
-    isMatchingMode: false,
-   })
-
-   _time += testBlock.MATCH_DURATION
-   /*
-      Matching testObject
-      */
-   state.sequence.push({
-    ...testBlock,
-    stateMachine: StateMachine.MATCH,
-    endTime: _time,
-    leftCircleRGB: testBlock.WHITE,
-    rightCircleRGB: testBlock.WHITE, // will be overwritten by UserColor
-    isMatchingMode: true,
-   })
-
-   _time += testBlock.RESET_DURATION
-
-   if (testBlock.RESET_DURATION) {
-    /*
-      RESET
-      reset testObject
-      */
-    state.sequence.push({
-     ...testBlock,
-     stateMachine: StateMachine.REST,
-     endTime: _time,
-     leftCircleRGB: testBlock.BACKGROUND_GREY,
-     rightCircleRGB: testBlock.BACKGROUND_GREY,
-     isResetingMode: true,
-     isMatchingMode: false,
-    })
-   }
-  })
+ function setTestTimings({ activeTest }) {
+  return parseTestConfig(activeTest.data.phases, state.sequence)
  }
 
  function drawCanvas(delta) {
@@ -99,7 +56,7 @@ export default function() {
   if (state.started) return
   state.onUpdate = options.onUpdate
   state.activeTest = config
-  setTestTimings()
+  setTestTimings(state)
   state.engine = loop(drawCanvas).start()
   state.started = true
   AppEmitter.emit('ipads:tests:start', {

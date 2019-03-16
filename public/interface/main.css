@@ -4587,6 +4587,16 @@ body{
   width: 50%;
 }
 
+.p-tl{
+  top:0;
+  left:0;
+}
+
+.p-tr{
+  top:0;
+  right:0;
+}
+
 /* ************
 *  margin
 ************ */
@@ -4690,6 +4700,11 @@ body{
   cursor: pointer;
 }
 
+.b-btn{
+  min-width: 30px;
+  min-height: 30px;
+}
+
 body {
  min-height: 100vh;
 }
@@ -4720,7 +4735,7 @@ body {
   }
 
 .controls-overlay.--inactive {
-   pointer-events: auto;
+   pointer-events: none;
   }
 
 .controls-overlay.--inactive:after {

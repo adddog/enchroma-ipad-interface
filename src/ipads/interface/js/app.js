@@ -3,6 +3,7 @@ import choo from 'choo'
 import AppEmitter from 'c:/emitter'
 import html from 'choo/html'
 import Model from 'i:lib/model'
+import DevModel from 'i:lib/dev-model'
 import AppInit from 'c:/app'
 import AppStore from 'c:/store'
 /*************
@@ -13,6 +14,7 @@ import interfaceView from 'i:views/interface'
 var app = choo()
 AppInit(app)
 app.use(Model)
+app.use(DevModel)
 
 function mainView(state, prev, send) {
  return html`

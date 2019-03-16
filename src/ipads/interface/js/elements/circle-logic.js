@@ -1,5 +1,5 @@
 import { cover, contain } from 'intrinsic-scale'
-import { GREY_NEUTRAL, CIRCLE_MARGIN } from 'c:/constants'
+import { isDev, GREY_NEUTRAL, CIRCLE_MARGIN } from 'c:/constants'
 import {
  hsv2rgb,
  xy2polar,
@@ -15,13 +15,18 @@ const touchesPayload = Math.PI * 2
 
 module.exports = function() {
  let ctx,
+  _options,
   _width,
   _height,
   _paused,
-  _previousXY = [0, 0],
+  _previousXY,
   _pos = {
    startX: 0,
    startY: 0,
+   x: 0,
+   y: 0,
+   deltaX: 0,
+   deltaY: 0,
   }
 
  function drawCircle(ctx, radius, options) {
@@ -70,36 +75,62 @@ module.exports = function() {
  const getNormalizedXY = evt => {
   const domRect = AppStore.getValue('canvas:domrect')
   const { clientX, clientY } = evt.touches[0]
-  const xPos = (clientX - domRect.x) / domRect.width - 0.5
-  const yPos = (clientY - domRect.y) / domRect.height - 0.5
+  const xPos = (clientX * 2 - domRect.width) / _width / 2
+  const yPos = ((clientY * 2 - domRect.height) / _height / 2) * -1
   return { x: xPos, y: yPos }
  }
 
  const updatePosOnDragXY = evt => {
+  if (!evt.touches || _paused || !evt.touches.length) {
+   return
+  }
   const { x, y } = getNormalizedXY(evt)
   _pos.x = _pos.startX + (x - _pos.startX)
   _pos.y = _pos.startY + (y - _pos.startY)
+  _pos.deltaX = x - _pos.startX
+  _pos.deltaY = y - _pos.startY
   return _pos
  }
 
  function calculateTouchPointStart(evt) {
+  if (!evt.touches || _paused || !evt.touches.length) {
+   return
+  }
   const { x, y } = getNormalizedXY(evt)
   _pos.startX = x
   _pos.startY = y
   return _pos
  }
 
- function calculateTouchPoint(evt) {
+ function calculateTouchPointEnd(evt) {
+  if (_paused) {
+   return
+  }
+  if (_options.onEnd) {
+   _options.onEnd()
+  }
+ }
+
+ function calculateTouchPoint(evt, pos) {
   const domRect = AppStore.getValue('canvas:domrect')
   if (!evt.touches || _paused || !evt.touches.length) {
    return
   }
-  const { x, y } = updatePosOnDragXY(evt)
-  const newX = x - _previousXY[0]
-  const newY = y - _previousXY[1]
-  const xMapped = (domRect.width / _width) * x
-  const yMapped = (domRect.height / _height) * y * -1
-  let [r, phi] = xy2polar(xMapped, yMapped)
+  const { x, y, deltaX, deltaY } = updatePosOnDragXY(evt)
+  if (_options.onMove) {
+   _options.onMove({ x, y, pos })
+  }
+  let newX
+  let newY
+  if (_previousXY) {
+   newX = _previousXY[0] + deltaX
+   newY = _previousXY[1] + deltaY
+  } else {
+   newX = x
+   newY = y
+  }
+  console.log('newX: ', newX, 'newY', newY)
+  let [r, phi] = xy2polar(newX, newY)
   let deg = rad2deg(phi)
   let hue = deg
   let saturation = r
@@ -112,6 +143,7 @@ module.exports = function() {
   touchesPayload[4] = blue
   touchesPayload[5] = x
   touchesPayload[6] = y
+  AppStore.setValue('interface:touches', touchesPayload)
   AppEmitter.emit('interface:touches', touchesPayload)
  }
 
@@ -120,12 +152,16 @@ module.exports = function() {
   _height = height
  }
 
- function init(el, { width, height }) {
+ function init(el, options) {
+  _options = options
+  const { width, height } = _options
   _width = width
   _height = height
+  console.log(_width, _height)
   addTouchEvents(el, {
    start: calculateTouchPointStart,
    move: calculateTouchPoint,
+   end: calculateTouchPointEnd,
    width,
    height,
   })

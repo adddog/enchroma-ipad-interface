@@ -1,7 +1,7 @@
 import AppEmitter from 'c:/emitter'
 import WebSocket from 'el:lib/websocket'
 import { getJSON } from 'i:lib/util'
-import { getActiveTest } from 'el:selectors'
+import { getActiveTest, getActiveTestData } from 'el:selectors'
 import AfterImageTest from './tests/after-image'
 
 async function loadConfig(state, emitter) {
@@ -11,22 +11,22 @@ async function loadConfig(state, emitter) {
 export default async function(state, emitter) {
  const afterImageTest = AfterImageTest()
  const config = await loadConfig(state, emitter)
- state.activeTest = null
+ state.activeTest = {}
  state.testStarted = false
  state.testsConfigs = config
 
- emitter.on('el:setActiveTest', data => {
-  state.activeTest = data
+ emitter.on('el:setActiveTest', id => {
+  state.activeTest = Object.assign({}, state.activeTest, { id })
   emitter.emit('render')
   WebSocket.setActiveTest(getActiveTest(state))
  })
 
  emitter.on('editor:change', data => {
-  state.testsConfigs[state.activeTest].data.parsed = data
+  getActiveTestData(state).parsed = data
  })
 
  emitter.on('el:test:start', data => {
-  afterImageTest.start(state.testsConfigs[state.activeTest], {
+  afterImageTest.start(getActiveTest(state), {
    onUpdate: data => {
     AppEmitter.emit('ipads:tests:update', data)
    },
@@ -56,14 +56,14 @@ export default async function(state, emitter) {
   emitter.emit('render')
  })
 
- AppEmitter.on('ipads:tests:update', data => {
+ /*AppEmitter.on('ipads:tests:update', data => {
   state.activeTestBlock = {
    ...data,
    name: data.test.TEST_NAME,
    test: JSON.stringify(data.test, null, 4),
   }
   emitter.emit('render')
- })
+ })*/
 
  AppEmitter.on('ipads:tests:stop', data => {})
 

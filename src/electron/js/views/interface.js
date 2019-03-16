@@ -2,23 +2,12 @@ import html from 'choo/html'
 import Nanocomponent from 'nanocomponent'
 import { getActiveTest, getActiveTestData } from 'el:selectors'
 
+import renderButton from 'c:/elements/button'
 import { CodeEditor } from 'el:views/code-editor'
 import { LiveTest } from 'el:views/live-test'
 
 import API from 'i:/api'
 const { setActiveTest, refresh } = API
-
-const renderButton = (data, onclick) =>
- html`
-  <button
-   class="column col-auto btn mx-1 my-2"
-   data-id="${data.id}"
-   onclick=${onclick}
-   disabled=${!!data.disabled}
-  >
-   ${data.name}
-  </button>
- `
 
 const editorView = new CodeEditor()
 module.exports = (state, emit) => {
@@ -30,26 +19,40 @@ module.exports = (state, emit) => {
    <h3>${activeTest.name}</h3>
    <div class="u-flex u-flex--start full-wh">
     <div class="u-flex u-flex--stack">
-     ${renderButton(
-      { name: 'Start', id: 'start', disabled: state.testStarted },
-      evt => emit('el:test:start', evt.target.dataset.id),
-     )}
+
      ${renderButton(
       {
-       name: html`
+       text: 'Start',
+       class: 'column col-auto mx-1 my-2',
+       id: 'start',
+       disabled: state.testStarted,
+      },
+      evt => emit('el:test:start', evt.target.dataset.id),
+     )}
+
+     ${renderButton(
+      {
+       text: html`
         <span class="${state.testPaused ? 'text-gray' : ''}"
          >pause</span
         >/<span class="${!state.testPaused ? 'text-gray' : ''}"
          >resume</span
         >
        `,
+       class: 'column col-auto mx-1 my-2',
        id: 'pause',
        disabled: !state.testStarted,
       },
       evt => emit('el:test:pause', evt.target.dataset.id),
      )}
+
      ${renderButton(
-      { name: 'Stop', id: 'stop', disabled: !state.testStarted },
+      {
+       text: 'Stop',
+       class: 'column col-auto mx-1 my-2',
+       id: 'stop',
+       disabled: !state.testStarted,
+      },
       evt => emit('el:test:stop', evt.target.dataset.id),
      )}
     </div>
