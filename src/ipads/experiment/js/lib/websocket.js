@@ -2,38 +2,33 @@ import { isProd } from 'c:/constants'
 import AppEmitter from 'c:/emitter'
 import WSBase from 'c:/websocket'
 import safeStringify from 'fast-safe-stringify'
+import WebsocketHandlers from './handlers'
 
 class WS extends WSBase {
  init() {
   super.init()
 
   this.client.onmessage = function(event) {
-   let data
+   let socketData
    try {
-    data = JSON.parse(event.data)
+    socketData = JSON.parse(event.data)
    } catch (e) {
-    console.log(e)
+    console.error(e)
+    return
    }
-   switch (data.action) {
+   const { type, data } = socketData
+   switch (type) {
     case 'refresh':
      window.location.reload()
      break
-    case 'setActiveTest':
-     AppEmitter.emit('setActiveTest', data.data)
+    case 'interface:touches':
+     WebsocketHandlers.testTouches(data)
      break
    }
   }
-
-  AppEmitter.on('touches', coords => {
-   this.send(coords, 'interface:touches')
-  })
-
-  AppEmitter.on('slider:brightness', brightness => {
-   this.send(brightness, 'interface:brightness')
-  })
  }
 
- onopen(){
+ onopen() {
   this.send('experiment', 'handshake')
  }
 }

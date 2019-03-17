@@ -12,6 +12,7 @@
         {
 
           "c:": "./src/common",
+          "pad:": "./src/ipads/common",
 
           "i:": "./src/ipads/interface/js",
           "i:elements": "./src/ipads/interface/js/elements",

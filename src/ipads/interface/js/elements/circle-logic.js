@@ -129,7 +129,6 @@ module.exports = function() {
    newX = x
    newY = y
   }
-  console.log('newX: ', newX, 'newY', newY)
   let [r, phi] = xy2polar(newX, newY)
   let deg = rad2deg(phi)
   let hue = deg
@@ -157,7 +156,6 @@ module.exports = function() {
   const { width, height } = _options
   _width = width
   _height = height
-  console.log(_width, _height)
   addTouchEvents(el, {
    start: calculateTouchPointStart,
    move: calculateTouchPoint,

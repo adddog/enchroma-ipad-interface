@@ -7,6 +7,7 @@ export const API = `${
  isProd ? '' : `http://localhost:${process.env.API_PORT}`
 }/api`
 export const CIRCLE_MARGIN = 20
+export const CIRCLE_STROKE_WIDTH = 3
 export const GREY_NEUTRAL = 127
 export const GREY_COLOR = Color.rgb(
  GREY_NEUTRAL,

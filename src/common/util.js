@@ -17,8 +17,13 @@ export const postJSON = (url, json) =>
   body: safeStringify(json),
  })
 
+export function getRGBStringArray(arr) {
+ let [r, g, b] = arr
+ return `rgb(${r},${g},${b})`
+}
+
 export function getRGBString(r, g, b) {
-  g = isUndefined(g) ? r : g
-  b = isUndefined(b) ? r : b
-  return `rgb(${r},${g},${b})`
+ g = isUndefined(g) ? r : g
+ b = isUndefined(b) ? r : b
+ return `rgb(${r},${g},${b})`
 }

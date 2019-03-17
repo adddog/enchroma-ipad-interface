@@ -3,7 +3,9 @@
 @import 'spectre.css';
 @import 'bulma-slider/dist/css/bulma-slider.min.css';
 @import './views/interface';
-@import '../../postcss/index';
+@import '../../../postcss/u-flex.css';
+@import '../../../postcss/u-display.css';
+@import '../../../postcss/u-buttons.css';
 
 body{
   min-height: 100vh;
