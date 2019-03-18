@@ -32,6 +32,7 @@ class ControlsComponent extends ConnectedBaseComponent {
  createElement(state) {
   this.state = {
    activeTestBlock: getActiveTestBlock(state),
+   interfaceData: null,
    isLeft: false,
   }
   return html`
@@ -39,8 +40,17 @@ class ControlsComponent extends ConnectedBaseComponent {
   `
  }
 
+ get payloadRGBString() {
+  return this.state.interfaceData
+   ? getRGBStringArray(
+      getRGBFromInterfacePayload(this.state.interfaceData),
+     )
+   : getRGBStringArray(this.state.activeTestBlock.WHITE)
+ }
+
  onStoreTestUpdate(testBlock) {
   this.state.activeTestBlock = testBlock
+
   if (isInduction(testBlock)) {
    this.state.isLeft = !this.state.isLeft
    Drawing.drawInductionHalf(
@@ -49,15 +59,14 @@ class ControlsComponent extends ConnectedBaseComponent {
    )
    Drawing.drawMatchHalf(RGB_GREY_NEUTRAL)
   } else if (isMatch(testBlock)) {
-   Drawing.drawInductionHalf(
-    getRGBStringArray(testBlock.WHITE),
-    this.state.isLeft,
-   )
+
+   Drawing.drawInductionHalf(this.payloadRGBString, this.state.isLeft)
    Drawing.drawMatchHalf(RGB_GREY_NEUTRAL)
   }
  }
 
  onStoreInterfaceUpdate(data) {
+  this.state.interfaceData = data
   if (isMatch(this.state.activeTestBlock)) {
    Drawing.updateInductionHalf(
     getRGBStringArray(getRGBFromInterfacePayload(data)),

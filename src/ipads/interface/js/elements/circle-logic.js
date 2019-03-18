@@ -80,6 +80,16 @@ module.exports = function() {
   return { x: xPos, y: yPos }
  }
 
+ function calculateTouchPointStart(evt) {
+  if (!evt.touches || _paused || !evt.touches.length) {
+   return
+  }
+  const { x, y } = getNormalizedXY(evt)
+  _pos.startX = x
+  _pos.startY = y
+  return _pos
+ }
+
  const updatePosOnDragXY = evt => {
   if (!evt.touches || _paused || !evt.touches.length) {
    return
@@ -89,16 +99,6 @@ module.exports = function() {
   _pos.y = _pos.startY + (y - _pos.startY)
   _pos.deltaX = x - _pos.startX
   _pos.deltaY = y - _pos.startY
-  return _pos
- }
-
- function calculateTouchPointStart(evt) {
-  if (!evt.touches || _paused || !evt.touches.length) {
-   return
-  }
-  const { x, y } = getNormalizedXY(evt)
-  _pos.startX = x
-  _pos.startY = y
   return _pos
  }
 
@@ -140,8 +140,8 @@ module.exports = function() {
   touchesPayload[2] = red
   touchesPayload[3] = green
   touchesPayload[4] = blue
-  touchesPayload[5] = x
-  touchesPayload[6] = y
+  touchesPayload[5] = newX
+  touchesPayload[6] = newY
   AppStore.setValue('interface:touches', touchesPayload)
   AppEmitter.emit('interface:touches', touchesPayload)
  }

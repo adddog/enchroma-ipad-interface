@@ -1,11 +1,12 @@
 import AppEmitter from 'c:/emitter'
+import { ASSET_PATH } from 'c:/constants'
 import { getJSON } from 'i:lib/util'
-import { getActiveTestData, getActiveTestBlock } from 'i:selectors'
+import { getActiveTestData, getActiveTestBlock, getActiveTestIndex } from 'i:selectors'
 import { parseTestConfig } from 'c:/test-configs'
 import WebsocketHandlers from 'i:lib/websocket/handlers'
 
 async function loadConfig(state, emitter) {
- return await getJSON('example-config.json')
+ return await getJSON(`${ASSET_PATH}/example-config.json`)
 }
 
 export default async function(state, emitter) {
@@ -19,7 +20,7 @@ export default async function(state, emitter) {
  state.activeTest.data.phases = parseTestConfig(
   getActiveTestData(state).phases,
  )
- WebsocketHandlers.testSet(state.activeTest.data.phases)
+ //WebsocketHandlers.testSet(state.activeTest.data.phases)
  emitter.emit('render')
 
  AppEmitter.on('dev:tests:update', data => {

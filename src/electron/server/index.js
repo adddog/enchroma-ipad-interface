@@ -28,7 +28,6 @@ app.get('/int', (request, reply) => {
 
 app.get('/exp', (request, reply) => {
   reply.sendFile(path.join(publicDir, 'experiment/index.html'))
-  //'./experiment/index.html') // serving path.join(__dirname, 'public', 'myHtml.html') directly
 })
 
 app.post('/api', (req, reply) => {

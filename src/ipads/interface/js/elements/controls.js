@@ -87,14 +87,13 @@ class ControlsComponent extends ConnectedBaseComponent {
  }
 
  onStoreTestUpdate(testBlock) {
+  console.log(getXYFromInterfacePayload(AppStore.getValue('interface:touches')));
   this.logic.setPreviousXY(
    getXYFromInterfacePayload(AppStore.getValue('interface:touches')),
   )
-  console.log(testBlock)
   if (testBlock) {
    this.logic.pause(!isMatch(testBlock))
   }
-
   if (isDev) {
    //this.addPreviousXY(testBlock)
   }
@@ -172,7 +171,6 @@ class ControlsComponent extends ConnectedBaseComponent {
  load(el) {
   super.load(el)
   this.el = el
-  console.log(el);
   AppStore.setValue('canvas:domrect', el.getBoundingClientRect())
 
   var params = {

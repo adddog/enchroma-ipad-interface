@@ -3,7 +3,7 @@ import choo from 'choo'
 import AppEmitter from 'c:/emitter'
 import html from 'choo/html'
 import Model from 'i:lib/model'
-import DevModel from 'i:lib/dev-model'
+import DevModel from 'c:/dev-model'
 import AppInit from 'c:/app'
 import AppStore from 'c:/store'
 /*************
