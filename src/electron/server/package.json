@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "enchroma-ipad-interface-server",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
