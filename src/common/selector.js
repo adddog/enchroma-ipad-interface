@@ -25,9 +25,11 @@ export const getActiveTestId = state =>
  state.activeTest && state.activeTest.id
 export const getActiveTestIndex = state =>
  state.activeTest && state.activeTest.index
-export const getActiveTest = state =>
- state.testsConfigs[getActiveTestId(state)]
-export const getActiveTestData = state => getActiveTest(state).data
+export const getActiveTest = state => state.activeTest
+export const getActiveConfigTest = state =>
+ state.activeTest && state.testsConfigs[getActiveTestId(state)]
+export const getActiveTestData = state =>
+ getActiveConfigTest(state).data
 export const getBlockFromIndex = (testData, index) =>
  testData.phases[index]
 export const getActiveTestBlock = state =>

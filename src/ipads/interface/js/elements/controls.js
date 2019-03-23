@@ -44,6 +44,7 @@ const renderOverlay = testBlock => {
  ************ */
 class Overlay extends ConnectedBaseComponent {
  createElement(testBlock = {}) {
+  console.log('isMatch(testBlock)', isMatch(testBlock));
   return html`
    <div
     class="${classnames([
@@ -87,10 +88,11 @@ class ControlsComponent extends ConnectedBaseComponent {
  }
 
  onStoreTestUpdate(testBlock) {
-  console.log(getXYFromInterfacePayload(AppStore.getValue('interface:touches')));
+  // console.log(getXYFromInterfacePayload(AppStore.getValue('interface:touches')));
   this.logic.setPreviousXY(
    getXYFromInterfacePayload(AppStore.getValue('interface:touches')),
   )
+  console.log(testBlock);
   if (testBlock) {
    this.logic.pause(!isMatch(testBlock))
   }

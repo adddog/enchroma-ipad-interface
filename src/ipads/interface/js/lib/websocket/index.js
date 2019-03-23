@@ -16,7 +16,6 @@ class WS extends WSBase {
     console.error(e)
     return
    }
-   console.log(socketData)
    const { type, data } = socketData
    switch (type) {
     case 'refresh':

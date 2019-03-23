@@ -16,9 +16,13 @@ export default async function(state, emitter) {
  state.testsConfigs = config
 
  emitter.on('el:setActiveTest', id => {
-  state.activeTest = Object.assign({}, state.activeTest, { id })
-  emitter.emit('render')
+  state.activeTest = Object.assign({}, state.activeTest, {
+   id,
+   index: 0,
+  })
+  state.activeTest.data = getActiveTestData(state)
   WebSocket.setActiveTest(getActiveTest(state))
+  emitter.emit('render')
  })
 
  emitter.on('editor:change', data => {

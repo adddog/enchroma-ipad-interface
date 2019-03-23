@@ -15,7 +15,8 @@ export default {
   AppStore.testUpdate()
  },
  testUpdate: data => {
-  AppStore.setValue('test:update', data)
+  AppStore.setValue('test:update', data.test)
+  AppEmitter.emit('test:update', data)
   AppStore.testUpdate()
  },
 }
