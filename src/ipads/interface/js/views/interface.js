@@ -14,8 +14,6 @@ const controlsView = new Controls()
 
 const renderInterface = (state, emit) => {
  const activeTestId = getActiveTestId(state)
- console.log(state.activeTest);
- console.log('activeTestId', activeTestId);
  switch (activeTestId) {
   case 'after-image':
    return html`

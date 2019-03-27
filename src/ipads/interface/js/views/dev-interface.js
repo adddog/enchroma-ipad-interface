@@ -53,7 +53,6 @@ export default (state, emit) => {
       AppEmitter.emit('dev:tests:update', {
        index: getActiveTestIndex(state) + 1,
       })
-      WebsocketHandlers.testUpdate(getActiveTestBlock(state))
      })}
      ${color.render({ key: 'interface:touches' })}
     </p>

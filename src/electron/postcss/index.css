@@ -1,3 +1,5 @@
+$c-gray-lightest: #22323;
+
 @import 'normalize.css';
 @import 'spectre.css';
 @import 'codemirror/lib/codemirror.css';
@@ -6,8 +8,13 @@
 @import '../../postcss/u-buttons.css';
 @import './views/interface';
 
+
 body{
   min-height: 100vh;
+}
+
+p{
+  margin-bottom: 0.2rem;
 }
 
 .app{
@@ -23,7 +30,7 @@ body{
 }
 
 .bg-grey{
-  background-color: #e0e1f3
+  background-color: $c-gray-lightest;
 }
 
 .bg-grey--light{
@@ -36,6 +43,9 @@ body{
 
 .live-test{
   &-color{
+    position: absolute;
+    top:0;
+    right:0;
     width: 30px;
     height: 30px;
     border-radius: 50%;

@@ -35,9 +35,6 @@ class WS extends WSBase {
   })
 
   AppEmitter.on('ipads:tests:update', data => {
-    console.log(data);
-   // data.previousXY = getXYFromInterfacePayload()
-   // data.touches = AppStore.getValue('interface:touches')
    this.send(data, 'master:test:update')
   })
 

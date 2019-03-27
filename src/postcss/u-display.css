@@ -1,67 +1,70 @@
-.w-100{
-  width: 100vw;
+span {
+ display: inline-block;
 }
-.h-100{
-  height: 100vh;
+.w-100 {
+ width: 100vw;
+}
+.h-100 {
+ height: 100vh;
 }
 .full-w {
-  position: relative;
-  width: 100%;
+ position: relative;
+ width: 100%;
 }
 
 .full-h {
-  height: 100%;
+ height: 100%;
 }
 
 .full-wh {
-  position: relative;
-  width: 100%;
-  height: 100%;
+ position: relative;
+ width: 100%;
+ height: 100%;
 }
 
 .margin-c {
-  margin: 0 auto;
+ margin: 0 auto;
 }
 
-.w-50{
-  width: 50%;
+.w-50 {
+ width: 50%;
 }
 
-.p-tl{
-  top:0;
-  left:0;
+.p-tl {
+ top: 0;
+ left: 0;
 }
-.p-tr{
-  top:0;
-  right:0;
+.p-tr {
+ top: 0;
+ right: 0;
 }
 
 /* ************
 *  margin
 ************ */
 
-.no-marg{
-  margin: 0;
+.no-marg {
+ margin: 0;
 }
 /* ************
 *  font
 ************ */
 .fs-base {
-  font-size: $font-size-m;
+ font-size: $font-size-m;
 }
 
 .fs-sm,
 .fs-small {
-  font-size: $font-size-sm;
+ font-size: $font-size-sm;
 }
 
 .fs-tiny,
 .fs-xsmall {
-  font-size: $font-size-xsm;
+ font-size: $font-size-xsm;
 }
 
 .no-wrap {
-  white-space: no-wrap;
+ white-space: no-wrap;
 }
 
 /* **************
@@ -69,19 +72,19 @@
 ************** */
 
 .c--darkish {
-  color: $c-gray-darkish;
+ color: $c-gray-darkish;
 }
 
 .c--grayish {
-  color: $c-grayish;
+ color: $c-grayish;
 }
 
 .c--red-light {
-  color: $c-red-light;
+ color: $c-red-light;
 }
 
 .bg--lightest {
-  background-color: $c-gray-lightest;
+ background-color: $c-gray-lightest;
 }
 
 /* **************
@@ -89,8 +92,8 @@
 ************** */
 
 .border-dashed {
-  border: $border-dashed;
-  border-radius: $button-border-radius;
+ border: $border-dashed;
+ border-radius: $button-border-radius;
 }
 
 /* **************
@@ -98,21 +101,21 @@
 ************** */
 
 .list {
-  padding: $padding-l;
-  list-style-type: none;
-  border-radius: $button-border-radius;
+ padding: $padding-l;
+ list-style-type: none;
+ border-radius: $button-border-radius;
+ li {
+  position: relative;
+  padding: $padding-m;
+  &:nth-child(odd) {
+   background-color: $c-gray-lightest;
+  }
+ }
+ &.--dashed {
   li {
-    position: relative;
-    padding: $padding-m;
-    &:nth-child(odd) {
-      background-color: $c-gray-lightest;
-    }
+   @extend .border-dashed;
   }
-  &.--dashed {
-    li {
-      @extend .border-dashed;
-    }
-  }
+ }
 }
 
 /* ************
@@ -120,7 +123,7 @@
 ************ */
 
 .scroll-y {
-  overflow-y: auto;
+ overflow-y: auto;
 }
 
 /* **************
@@ -128,10 +131,45 @@
 ************** */
 
 .disabled {
-  color: $c-gray;
-  cursor: not-allowed;
+ color: $c-gray;
+ cursor: not-allowed;
 }
 .--clickable {
-  cursor: pointer;
+ cursor: pointer;
 }
 
+/* **************
+*    card
+************** */
+
+.card {
+ border: 1px black dashed;
+ padding: 0.3rem;
+ margin: 0.3rem;
+ background-color: $c-gray-lightest;
+}
+
+/* **************
+*    label
+************** */
+
+.label {
+ display: flex;
+ span {
+  &:nth-child(2) {
+   padding-left: 0.2rem;
+  }
+ }
+}
+.info{
+  font-size: 0.7rem;
+}
+
+/* **************
+*    gfx
+************** */
+.circle-sm{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}

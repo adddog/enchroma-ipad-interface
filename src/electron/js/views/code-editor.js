@@ -8,17 +8,23 @@ class CodeEditor extends Nanocomponent {
   this.config = config
   this.emit = emit
   return html`
-   <div class="code-editor full-wh"></div>
+   <div class="full-wh">
+    <p>Edit the configuration before starting the test.</p>
+    <div class="code-editor full-wh"></div>
+   </div>
   `
  }
 
  load(el) {
   this.el = el
-  var myCodeMirror = CodeMirror(this.el, {
-   value: JSON.stringify(this.config, null, 4),
-   lineNumbers: true,
-   mode: 'javascript',
-  })
+  var myCodeMirror = CodeMirror(
+   this.el.querySelector('.code-editor'),
+   {
+    value: JSON.stringify(this.config, null, 4),
+    lineNumbers: true,
+    mode: 'javascript',
+   },
+  )
   myCodeMirror.setSize('100%', '100%')
   myCodeMirror.on('change', c => {
    let json

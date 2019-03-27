@@ -21,6 +21,8 @@ module.exports = function() {
   _paused,
   _previousXY,
   _pos = {
+   startTime: 0,
+   endTime: 0,
    startX: 0,
    startY: 0,
    x: 0,
@@ -85,6 +87,7 @@ module.exports = function() {
    return
   }
   const { x, y } = getNormalizedXY(evt)
+  _pos.startTime = performance.now()
   _pos.startX = x
   _pos.startY = y
   return _pos
@@ -106,6 +109,7 @@ module.exports = function() {
   if (_paused) {
    return
   }
+  _pos.endTime = performance.now()
   if (_options.onEnd) {
    _options.onEnd()
   }
@@ -116,7 +120,7 @@ module.exports = function() {
   if (!evt.touches || _paused || !evt.touches.length) {
    return
   }
-  const { x, y, deltaX, deltaY } = updatePosOnDragXY(evt)
+  const { x, y, deltaX, deltaY, startTime, endTime } = updatePosOnDragXY(evt)
   if (_options.onMove) {
    _options.onMove({ x, y, pos })
   }
@@ -142,6 +146,7 @@ module.exports = function() {
   touchesPayload[4] = blue
   touchesPayload[5] = newX
   touchesPayload[6] = newY
+  touchesPayload[7] = [startTime, endTime]
   AppStore.setValue('interface:touches', touchesPayload)
   AppEmitter.emit('interface:touches', touchesPayload)
  }

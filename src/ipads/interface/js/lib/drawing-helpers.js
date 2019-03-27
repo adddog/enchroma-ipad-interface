@@ -54,7 +54,6 @@ export function addTouchEvents(el, callbacks) {
 
 export function touchesToPolar(e) {
  const { clientX, clientY } = e.touches[0]
- console.log(e.touches[0])
  //xy2polar2(clientX, clientY)
  //let [r, phi] = xy2polar(clientX, clientY)
  //let deg = rad2deg(phi)

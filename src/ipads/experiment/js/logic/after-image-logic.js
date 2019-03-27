@@ -126,7 +126,6 @@ module.exports = function() {
 
  function init(el, { width, height }) {
   ctx = el.getContext('2d')
-  console.log(ctx);
  }
  function start(e) {
   tests = [...res]

@@ -1,6 +1,8 @@
 import { isEmpty } from 'lodash'
 import AppStore from 'c:/store'
-
+/* **************
+ *  APP STORE
+ ************** */
 export const getWidth = () => AppStore.getValue('res').width
 export const getHeight = () => AppStore.getValue('res').height
 export const getRes = () => AppStore.getValue('res')
@@ -16,6 +18,10 @@ export const getXYFromInterfacePayload = payload => {
  const val = payload || AppStore.getValue('interface:touches')
  return [val[5] || 0, val[6] || 0]
 }
+export const hasInterfaceTouches = () =>
+ !!AppStore.getValue('interface:touches')
+export const getInterfaceTouches = () =>
+ AppStore.getValue('interface:touches')
 
 /* ************
  *  MODEL

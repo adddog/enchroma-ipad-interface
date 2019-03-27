@@ -23,9 +23,13 @@ export default async function(state, emitter) {
  //WebsocketHandlers.testSet(state.activeTest.data.phases)
  emitter.emit('render')
 
+/* **************
+*  DEVELOPMENT
+************** */
  AppEmitter.on('dev:tests:update', data => {
   state.activeTest = Object.assign({}, state.activeTest, data)
   WebsocketHandlers.testUpdate({
+   ...state.activeTest,
    test: getActiveTestBlock(state),
   })
   emitter.emit('render')
