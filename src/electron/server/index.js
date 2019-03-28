@@ -2,20 +2,21 @@ const path = require('path')
 const express = require('express')
 const cors = require('cors')
 var bodyParser = require('body-parser')
+console.log( path.join(process.cwd(), '.env'));
 const dotenv = require('dotenv').config({
-  path: path.join(process.cwd(), '.env'),
+  path: path.join(__dirname, '.env.prod'),
 })
-const PORT = process.env.API_PORT
-const WS_PORT = process.env.WS_PORT
+const PORT = process.env.API_PORT || 3000
+const WS_PORT = process.env.WS_PORT || 3333
 
-const WS = require('./websocket')()
+const WS = require('./websocket')({port: WS_PORT})
 
 const app = express()
 app.use(cors()) // for parsing application/json
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-const publicDir = path.join(process.cwd(), 'public')
+const publicDir = path.join('/public')
 app.use(express.static(publicDir))
 
 app.get('/', (request, reply) => {

@@ -3,7 +3,7 @@ const parse = require("fast-json-parse")
 const WebSocket = require("ws")
 const colors = require("colors")
 
-module.exports = function() {
+module.exports = function({ port }) {
   const connections = new Map()
 
   const transformData = data => {
@@ -30,7 +30,7 @@ module.exports = function() {
     hasInterface() && send(getInterface(), data)
 
   const wss = new WebSocket.Server({
-    port: process.env.WS_PORT,
+    port: port,
     perMessageDeflate: false,
   })
 
