@@ -1,10 +1,10 @@
 import 'whatwg-fetch'
 import choo from 'choo'
 import html from 'choo/html'
-import Model from 'exp:lib/model'
 import DevModel from 'c:/dev-model'
 import AppInit from 'c:/app'
 import AppStore from 'c:/store'
+import Websocket from 'exp:lib/websocket'
 
 /*************
  *  views
@@ -13,7 +13,6 @@ import Views from 'exp:views/index'
 
 var app = choo()
 AppInit(app)
-app.use(Model)
 app.use(DevModel)
 
 //class="absolute app w-100 h-100 sans-serif bg-white"

@@ -8,7 +8,7 @@ import { getActiveTestId } from 'i:selectors'
 import AppStore from 'c:/store'
 import { Controls } from 'i:elements/controls'
 
-import renderDevInterface from './dev-interface'
+import renderDevInterface from 'pad:/views/dev-interface'
 
 const controlsView = new Controls()
 

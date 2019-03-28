@@ -12,12 +12,7 @@
      "RESET_DURATION": 0,
      "WHITE": [255, 255, 255],
      "BACKGROUND_GREY": [128, 128, 128],
-     "RGB_TEST_VALUES": [
-      [255, 25, 25],
-      [255, 25, 25],
-      [255, 25, 25],
-      [255, 25, 25]
-     ]
+     "RGB_TEST_VALUES": [255, 25, 25]
     },
     {
      "TEST_NAME": "RDESAT",
@@ -27,12 +22,7 @@
      "RESET_DURATION": 0,
      "WHITE": [255, 255, 255],
      "BACKGROUND_GREY": [128, 128, 128],
-     "RGB_TEST_VALUES": [
-      [255, 125, 125],
-      [255, 125, 125],
-      [255, 125, 125],
-      [255, 125, 125]
-     ]
+     "RGB_TEST_VALUES": [255, 125, 125]
     },
     {
      "TEST_NAME": "GGGG",
@@ -42,12 +32,7 @@
      "RESET_DURATION": 0,
      "WHITE": [200, 200, 200],
      "BACKGROUND_GREY": [128, 128, 128],
-     "RGB_TEST_VALUES": [
-      [0, 255, 15],
-      [0, 255, 15],
-      [0, 255, 15],
-      [0, 255, 15]
-     ]
+     "RGB_TEST_VALUES": [0, 255, 15]
     },
     {
      "TEST_NAME": "GDESAT",
@@ -57,12 +42,7 @@
      "RESET_DURATION": 0,
      "WHITE": [200, 200, 200],
      "BACKGROUND_GREY": [128, 128, 128],
-     "RGB_TEST_VALUES": [
-      [125, 255, 125],
-      [125, 255, 125],
-      [125, 255, 125],
-      [125, 255, 125]
-     ]
+     "RGB_TEST_VALUES": [125, 255, 125]
     },
     {
      "TEST_NAME": "MMMMM",
@@ -72,12 +52,7 @@
      "RESET_DURATION": 0,
      "WHITE": [200, 200, 200],
      "BACKGROUND_GREY": [147, 147, 147],
-     "RGB_TEST_VALUES": [
-      [255, 50, 255],
-      [255, 50, 255],
-      [255, 50, 255],
-      [255, 50, 255]
-     ]
+     "RGB_TEST_VALUES": [255, 50, 255]
     },
     {
      "TEST_NAME": "MDESAT",
@@ -87,12 +62,7 @@
      "RESET_DURATION": 0,
      "WHITE": [200, 200, 200],
      "BACKGROUND_GREY": [147, 147, 147],
-     "RGB_TEST_VALUES": [
-      [255, 125, 255],
-      [255, 125, 255],
-      [255, 125, 255],
-      [255, 125, 255]
-     ]
+     "RGB_TEST_VALUES": [255, 125, 255]
     }
    ]
   }

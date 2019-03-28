@@ -12,3 +12,6 @@ export const getActiveTestIndex = state =>
  state.activeTest && state.activeTest.index
 export const getActiveTestName = state =>
  state.activeTest && state.activeTest.name
+
+export const getIsPaused = state => state.paused
+export const getIsWaiting = state => state.waiting

@@ -21,7 +21,7 @@ import {
 } from 'c:/selector'
 import { isInduction, isMatch, isRest } from 'c:/state-machine'
 import { getActiveTestBlock } from 'pad:/selectors'
-import { ConnectedBaseComponent } from './base'
+import { ConnectedBaseComponent } from 'pad:/views/base'
 import Two from 'two.js'
 import Drawing from './exp-drawing'
 
@@ -49,7 +49,11 @@ class ControlsComponent extends ConnectedBaseComponent {
  }
 
  onStoreTestUpdate(testBlock) {
+  if(this.state.activeTestBlock === testBlock){
+    return
+  }
   this.state.activeTestBlock = testBlock
+  console.log(this.state.activeTestBlock)
 
   if (isInduction(testBlock)) {
    this.state.isLeft = !this.state.isLeft
@@ -59,7 +63,6 @@ class ControlsComponent extends ConnectedBaseComponent {
    )
    Drawing.drawMatchHalf(RGB_GREY_NEUTRAL)
   } else if (isMatch(testBlock)) {
-
    Drawing.drawInductionHalf(this.payloadRGBString, this.state.isLeft)
    Drawing.drawMatchHalf(RGB_GREY_NEUTRAL)
   }
@@ -77,7 +80,7 @@ class ControlsComponent extends ConnectedBaseComponent {
 
  @autobind
  resize(res) {
-  this.logic.resize(res)
+  this.logic && this.logic.resize(res)
  }
 
  get diameter() {

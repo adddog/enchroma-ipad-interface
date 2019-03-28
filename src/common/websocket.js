@@ -29,7 +29,7 @@ class WS {
   this.client.send(safeStringify({ data, type }))
  }
 
- onopen() {}
+ onMessage() {}
 }
 
 export default WS

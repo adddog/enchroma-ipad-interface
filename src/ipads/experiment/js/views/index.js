@@ -7,9 +7,11 @@ import { getRGBString } from 'i:lib/drawing-helpers'
 import { getActiveTestId, getActiveTestBlock } from 'pad:/selectors'
 import AppStore from 'c:/store'
 import { Controls } from './after-image/exp'
-import renderDevInterface from 'i:/views/dev-interface'
+import renderDevInterface from 'pad:/views/dev-interface'
+import Overlay from 'pad:/views/overlay'
 
 const controlsView = new Controls()
+const overlayView = new Overlay()
 
 const renderExperiment = (state, emit) => {
  const activeTestId = getActiveTestId(state)
@@ -20,7 +22,7 @@ const renderExperiment = (state, emit) => {
    `
   default:
    return html`
-    <p class="p-absolute pos-tl c-white">interface</p>
+    <p class="p-absolute pos-tl c-white u-flex u-flex--center">interface</p>
     <h1><mark>waiting for a test...</mark></h1>
    `
  }
@@ -32,7 +34,9 @@ module.exports = (state, emit) => {
    class="w-100 h-100 black-80 columns interface-view flex-c"
    style="background-color: ${getRGBString(GREY_NEUTRAL)}"
   >
-   ${renderExperiment(state, emit)} ${renderDevInterface(state, emit)}
+   ${renderExperiment(state, emit)}
+   ${renderDevInterface(state, emit)}
+   ${overlayView.render(state, emit)}
   </article>
  `
 }

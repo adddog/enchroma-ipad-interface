@@ -2,10 +2,10 @@ import 'whatwg-fetch'
 import choo from 'choo'
 import AppEmitter from 'c:/emitter'
 import html from 'choo/html'
-import Model from 'i:lib/model'
 import DevModel from 'c:/dev-model'
 import AppInit from 'c:/app'
 import AppStore from 'c:/store'
+import Websocket from 'i:lib/websocket'
 /*************
  *  views
  ************ */
@@ -13,7 +13,6 @@ import interfaceView from 'i:views/interface'
 
 var app = choo()
 AppInit(app)
-app.use(Model)
 app.use(DevModel)
 
 function mainView(state, prev, send) {

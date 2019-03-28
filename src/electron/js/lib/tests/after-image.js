@@ -69,10 +69,12 @@ export default function() {
   state.paused = !state.paused
  }
  function stop(argument) {
-  state.engine.stop()
-  state.started = false
-  setTestTimings()
-  resetState()
+  if(state.engine){
+    state.engine.stop()
+    state.started = false
+    setTestTimings(state)
+    resetState()
+  }
  }
  return {
   start,

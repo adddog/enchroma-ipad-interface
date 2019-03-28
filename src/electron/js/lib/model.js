@@ -1,4 +1,5 @@
 import AppEmitter from 'c:/emitter'
+import { downloadJson, importFile } from 'c:/util'
 import { isMatch } from 'c:/state-machine'
 import WebSocket from 'el:lib/websocket'
 import { getJSON } from 'i:lib/util'
@@ -14,7 +15,7 @@ import {
 } from 'el:selectors'
 import AfterImageTest from './tests/after-image'
 
-async function loadConfig(state, emitter) {
+async function loadConfig(state) {
  return await getJSON('data/tests-config.json')
 }
 
@@ -42,7 +43,7 @@ const createTestResult = state => {
 
 export default async function(state, emitter) {
  const afterImageTest = AfterImageTest()
- const config = await loadConfig(state, emitter)
+ const config = await loadConfig(state)
  state.activeTest = {}
  state.activeTestBlock = null
  state.testStarted = false
@@ -70,29 +71,39 @@ export default async function(state, emitter) {
   getActiveTestData(state).parsed = data
  })
 
+ /* ************
+ *  BUTTONS
+ ************ */
+
  emitter.on('el:test:start', data => {
   afterImageTest.start(getActiveTest(state), {
    onUpdate: onTestUpdate,
   })
-  //state.activeTestBlock = getActiveTestBlockData(state)
   state.testStarted = true
   emitter.emit('render')
  })
+
  emitter.on('el:test:pause', data => {
   state.testPaused = !state.testPaused
   afterImageTest.pause()
   AppEmitter.emit('ipads:tests:pause', state.testPaused)
   emitter.emit('render')
  })
+
  emitter.on('el:test:stop', data => {
   afterImageTest.stop()
-  state.testStarted = false
   AppEmitter.emit('ipads:tests:stop')
   emitter.emit('render')
  })
 
+ emitter.on('el:reload', data => {
+  state.testStarted = false
+  afterImageTest.stop()
+  AppEmitter.emit('ipads:reload')
+  location.reload()
+ })
+
  AppEmitter.on('ipads:tests:start', data => {
-  // state.activeTestBlock = data
   emitter.emit('render')
  })
 
@@ -106,6 +117,23 @@ export default async function(state, emitter) {
  })*/
 
  AppEmitter.on('ipads:tests:stop', data => {})
+
+ /* ************
+  *  config
+  ************ */
+ emitter.on('el:config:export', data => {
+  downloadJson(data)
+ })
+ emitter.on('el:config:import', data => {
+  importFile().then(file => {
+   var fr = new FileReader()
+   fr.onload = function(e) {
+    state.activeTest.data = JSON.parse(e.target.result)
+    emitter.emit('render')
+   }
+   fr.readAsText(file)
+  })
+ })
 
  emitter.emit('render')
 }

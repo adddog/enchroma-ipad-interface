@@ -3,6 +3,7 @@ import fastclick from 'fastclick'
 import devtools from 'choo-devtools'
 
 import CommonModel from 'c:/model'
+import AppModel from 'pad:/models'
 
 export default app => {
  fastclick(document.body)
@@ -18,6 +19,7 @@ export default app => {
  }
 
  app.use(CommonModel)
+ app.use(AppModel)
 
  window.addEventListener('resize', e => {
   AppEmitter.emit('resize', {

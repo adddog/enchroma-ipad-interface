@@ -19,53 +19,13 @@ import {
 } from 'c:/selector'
 import { isInduction, isMatch, isRest } from 'c:/state-machine'
 import { getActiveTestBlock } from 'i:selectors'
-import { ConnectedBaseComponent } from './base'
+import Overlay from 'pad:/views/overlay'
+import { ConnectedBaseComponent } from 'pad:/views/base'
 import Two from 'two.js'
 import CodeMirror from 'codemirror'
 import Logic from './circle-logic'
 import DevLogic from './dev-circle-logic'
 
-const renderOverlay = testBlock => {
- if (!testBlock) return null
- if (isInduction(testBlock) || isRest(testBlock)) {
-  return html`
-   <div class="bg-overlay">
-    <h1><mark>please hold...</mark></h1>
-   </div>
-  `
- }
- if (isMatch(testBlock)) {
-  return null
- }
-}
-
-/* ************
- *  OVERLAY
- ************ */
-class Overlay extends ConnectedBaseComponent {
- createElement(testBlock = {}) {
-  return html`
-   <div
-    class="${classnames([
-     'p-absolute',
-     'full-wh',
-     'controls-overlay',
-     { '--inactive': !isMatch(testBlock) },
-    ])}"
-   >
-    ${renderOverlay(testBlock)}
-   </div>
-  `
- }
-
- onStoreTestUpdate(testBlock) {
-  this.render(testBlock)
- }
-
- update() {
-  return true
- }
-}
 const overlay = new Overlay()
 
 /* ************
@@ -87,7 +47,6 @@ class ControlsComponent extends ConnectedBaseComponent {
  }
 
  onStoreTestUpdate(testBlock) {
-  console.log(getXYFromInterfacePayload(AppStore.getValue('interface:touches')));
   this.logic.setPreviousXY(
    getXYFromInterfacePayload(AppStore.getValue('interface:touches')),
   )

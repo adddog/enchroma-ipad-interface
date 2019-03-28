@@ -1,35 +1,21 @@
-import { isProd } from 'c:/constants'
 import AppEmitter from 'c:/emitter'
-import WSBase from 'c:/websocket'
-import safeStringify from 'fast-safe-stringify'
-import WebsocketHandlers from './handlers'
+import iPadWSBase from 'pad:/websocket'
+import WebsocketHandlers from 'exp:lib/handlers'
 
-class WS extends WSBase {
- init() {
-  super.init()
-
-  this.client.onmessage = function(event) {
-   let socketData
-   try {
-    socketData = JSON.parse(event.data)
-   } catch (e) {
-    console.error(e)
-    return
-   }
-   const { type, data } = socketData
-   switch (type) {
-    case 'refresh':
-     window.location.reload()
-     break
-    case 'interface:touches':
-     WebsocketHandlers.testTouches(data)
-     break
-   }
-  }
- }
+class WS extends iPadWSBase {
 
  onopen() {
+  console.log('onopen: experiment')
   this.send('experiment', 'handshake')
+ }
+
+ onMessage(socketData) {
+  const { type, data } = socketData
+  switch (type) {
+   case 'interface:touches':
+      WebsocketHandlers.testTouches(data)
+    break
+  }
  }
 }
 
