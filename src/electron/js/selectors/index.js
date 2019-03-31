@@ -1,16 +1,19 @@
-import { values } from 'lodash'
+import { values } from "lodash"
 export {
- hasActiveTest,
- getActiveTest,
- getActiveTestData,
-} from 'c:/selector'
+  hasActiveTest,
+  getActiveTest,
+  getActiveTestData,
+} from "c:/selector"
 export const getTestConfigs = state => values(state.testsConfigs)
 export const getActiveTestBlock = state => state.activeTestBlock
 export const getActiveTestBlockData = state =>
- getActiveTestBlock(state) && state.activeTestBlock.test
+  getActiveTestBlock(state) && state.activeTestBlock.test
 
 export const getActiveTestBlockDataToString = state =>
- getActiveTestBlock(state) &&
- JSON.stringify(state.activeTestBlock.test, null, 4)
+  getActiveTestBlock(state) &&
+  JSON.stringify(state.activeTestBlock.test, null, 4)
 
 export const getTestResults = state => state.testResult
+export const getTestResultsOnly = state =>
+  state.testResult.map(({ result }) => result || "false")
+export const getIsTestComplete = state => state.testComplete

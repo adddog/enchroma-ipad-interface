@@ -48,7 +48,6 @@ module.exports = function({ port }) {
         case "interface:brightness":
         case "interface:touches":
           {
-            console.log(getExperiment().id)
             sendExperiment(data)
             sendMaster(data)
           }

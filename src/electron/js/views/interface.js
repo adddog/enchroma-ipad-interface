@@ -66,10 +66,10 @@ module.exports = (state, emit) => {
      )}
     </div>
     <div class="u-flex full-wh">
-     ${!state.testStarted
+     ${!state.testStarted && getActiveTestData(state)
       ? editorView.render(getActiveTestData(state).phases, emit)
       : null}
-     ${LiveTest(state)}
+     ${LiveTest(state, emit)}
     </div>
    </div>
   </article>

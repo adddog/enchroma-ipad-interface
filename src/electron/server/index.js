@@ -16,11 +16,11 @@ app.use(cors()) // for parsing application/json
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-const publicDir = path.join('/public')
+const publicDir = path.join(__dirname, '../../../', '/public')
 app.use(express.static(publicDir))
 
 app.get('/', (request, reply) => {
-  reply.sendFile('index.html') // serving path.join(__dirname, 'public', 'myHtml.html') directly
+  reply.sendFile(path.join(publicDir, 'electron/index.html') )
 })
 
 app.get('/int', (request, reply) => {

@@ -99,18 +99,6 @@ function setTestTimings() {
   });
 }
 
-function drawCircle(ctx, options = {}) {
- ctx.fillStyle =
-  'rgb(' +
-  [
-   options.background || GREY_NEUTRAL,
-   options.background || GREY_NEUTRAL,
-   options.background || GREY_NEUTRAL,
-  ].join(',') +
-  ')'
- ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
-}
-
 module.exports = function() {
 
  AppEmitter.on('resize', resize)
@@ -119,9 +107,6 @@ module.exports = function() {
  function resize(e) {}
 
  function render(e) {
-/*  drawCircle(ctx, {
-   background: Math.floor(AppStore.store.get('brightness') * 255),
-  })*/
  }
 
  function init(el, { width, height }) {

@@ -9,6 +9,7 @@ import {
  getRGBFromInterfacePayload,
 } from 'c:/selector'
 import {
+ getTestResultsOnly,
  getActiveTest,
  getActiveTestData,
  getActiveTestBlockData,
@@ -57,6 +58,12 @@ export default async function(state, emitter) {
   emitter.emit('render')
  }
 
+ function onTestComplete(data) {
+  state.testPaused = true
+  state.testComplete = true
+  emitter.emit('render')
+ }
+
  emitter.on('el:setActiveTest', id => {
   state.activeTest = Object.assign({}, state.activeTest, {
    id,
@@ -78,6 +85,7 @@ export default async function(state, emitter) {
  emitter.on('el:test:start', data => {
   afterImageTest.start(getActiveTest(state), {
    onUpdate: onTestUpdate,
+   onComplete: onTestComplete,
   })
   state.testStarted = true
   emitter.emit('render')
@@ -122,17 +130,23 @@ export default async function(state, emitter) {
   *  config
   ************ */
  emitter.on('el:config:export', data => {
-  downloadJson(data)
+  downloadJson(data, 'after-image-config')
  })
  emitter.on('el:config:import', data => {
   importFile().then(file => {
    var fr = new FileReader()
    fr.onload = function(e) {
-    state.activeTest.data = JSON.parse(e.target.result)
+    state.activeTest.data.phases = JSON.parse(e.target.result)
     emitter.emit('render')
    }
    fr.readAsText(file)
   })
+ })
+ /* ************
+ *  results
+ ************ */
+ emitter.on('el:results:export', () => {
+  downloadJson(getTestResultsOnly(state), 'test-results')
  })
 
  emitter.emit('render')

@@ -42,7 +42,7 @@ class CodeEditor extends Nanocomponent {
    json = JSON.parse(e.getValue())
    this.emit('editor:change', json)
   } catch (err) {
-   this.emit('editor:change', err)
+    console.error(err);
   }
  }
 
@@ -56,12 +56,12 @@ class CodeEditor extends Nanocomponent {
     mode: 'javascript',
    },
   )
-  console.log(this.myCodeMirror)
   this.myCodeMirror.setSize('100%', '100%')
   this.myCodeMirror.on('change', this.onChange)
  }
 
  update(config) {
+  console.log(config);
   if (this.myCodeMirror) {
    this.myCodeMirror.setValue(JSON.stringify(config, null, 4))
   }
