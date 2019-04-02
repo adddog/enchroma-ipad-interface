@@ -8,3 +8,5 @@ package-lock.json
 dist_electron
 bundle*
 main.min.css
+ngrok*
+ssl/

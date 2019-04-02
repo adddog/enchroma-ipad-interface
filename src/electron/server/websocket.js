@@ -3,7 +3,7 @@ const parse = require("fast-json-parse")
 const WebSocket = require("ws")
 const colors = require("colors")
 
-module.exports = function({ port }) {
+module.exports = function({ server }) {
   const connections = new Map()
 
   const transformData = data => {
@@ -13,8 +13,11 @@ module.exports = function({ port }) {
       return data
     }
   }
-  const send = (connection, data) =>
-    connection.send(transformData(data))
+  const send = (connection, data) => {
+    console.log(connection.readyState)
+    connection.readyState === 1 &&
+      connection.send(transformData(data))
+  }
 
   const hasExperiment = () => connections.has("experiment")
   const getExperiment = () => connections.get("experiment")
@@ -30,7 +33,7 @@ module.exports = function({ port }) {
     hasInterface() && send(getInterface(), data)
 
   const wss = new WebSocket.Server({
-    port: port,
+    server,
     perMessageDeflate: false,
   })
 

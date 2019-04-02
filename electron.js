@@ -31,8 +31,8 @@ function createWindow() {
     mainWindow.loadURL(`http://localhost:7788`)
   }
 
-  if (!IS_PROD) {
     mainWindow.webContents.openDevTools()
+  if (!IS_PROD) {
   }
 
   mainWindow.on("closed", function() {
