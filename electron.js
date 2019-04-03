@@ -118,9 +118,13 @@ function createWindow() {
 }
 
 app.on("ready", createWindow)
+
+app.on("before-quit", function() {
+  ngrok.kill("SIGINT")
+})
 app.on("window-all-closed", function() {
   if (process.platform !== "darwin") {
-    ngrok.kill('SIGINT')
+    ngrok.kill("SIGINT")
     app.quit()
   }
 })

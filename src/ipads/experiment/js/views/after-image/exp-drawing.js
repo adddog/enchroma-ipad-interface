@@ -1,11 +1,11 @@
-import html from 'choo/html'
+import html from "choo/html"
 import {
- getRes,
- getXYFromInterfacePayload,
- getHeight,
- getWidth,
-} from 'c:/selector'
-import { getRGBStringArray } from 'c:/util'
+  getRes,
+  getXYFromInterfacePayload,
+  getHeight,
+  getWidth,
+} from "c:/selector"
+import { getRGBStringArray } from "c:/util"
 
 const HALF_PI = Math.PI / 2
 const THREE_Q_PI = Math.PI * 1.5
@@ -13,63 +13,75 @@ const HALF_PI_END = HALF_PI + Math.PI
 const THREE_Q_PI_END = THREE_Q_PI + Math.PI
 
 class ExpDrawing {
- setTwo(two) {
-  this.two = two
-  this.inductionHalf
-  this.matchHalf
-  this.isLeft
- }
+  setTwo(two) {
+    this.two = two
+    this.inductionHalf
+    this.matchHalf
+    this.isLeft
 
- getArcStart(isLeft = this.isLeft) {
-  return isLeft ? HALF_PI : THREE_Q_PI
- }
+    this.group = two.makeGroup()
+  }
 
- getArcStartEnd(isLeft = this.isLeft) {
-  return isLeft ? HALF_PI_END : THREE_Q_PI_END
- }
+  getArcStart(isLeft = this.isLeft) {
+    return isLeft ? HALF_PI : THREE_Q_PI
+  }
 
- setRadius(radius) {
-  this.radius = radius
- }
+  getArcStartEnd(isLeft = this.isLeft) {
+    return isLeft ? HALF_PI_END : THREE_Q_PI_END
+  }
 
- setTestBlock(testBlock) {
-  this.testBlock = testBlock
- }
+  setRadius(radius) {
+    this.radius = radius
+  }
 
- drawInductionHalf(color, isLeft = false) {
-  this.isLeft = isLeft
-  this.inductionHalf = this.two
-   .makeArcSegment(
-    getWidth() / 2,
-    getHeight() / 2,
-    0,
-    this.radius,
-    this.getArcStart(),
-    this.getArcStartEnd(),
-   )
-   .noStroke()
-  this.inductionHalf.fill = color
-  this.two.update()
- }
+  setTestBlock(testBlock) {
+    this.testBlock = testBlock
+  }
 
- updateInductionHalf(color, isLeft = false) {
-  this.inductionHalf.fill = color
-  this.two.update()
- }
+  drawInductionHalf(color, isLeft = false) {
+    if (this.inductionHalf) {
+      this.group.remove(this.inductionHalf)
+      this.two.remove(this.inductionHalf)
+    }
+    this.isLeft = isLeft
+    this.inductionHalf = this.two
+      .makeArcSegment(
+        getWidth() / 2,
+        getHeight() / 2,
+        0,
+        this.radius,
+        this.getArcStart(),
+        this.getArcStartEnd()
+      )
+      .noStroke()
+    this.inductionHalf.fill = color
+    this.group.add(this.inductionHalf)
+    //  this.two.update()
+  }
 
- drawMatchHalf(color) {
-  this.matchHalf = this.two
-   .makeArcSegment(
-    getWidth() / 2,
-    getHeight() / 2,
-    0,
-    this.radius,
-    this.getArcStart(!this.isLeft),
-    this.getArcStartEnd(!this.isLeft),
-   )
-   .noStroke()
-  this.matchHalf.fill = color
-  this.two.update()
- }
+  updateInductionHalf(color, isLeft = false) {
+    this.inductionHalf.fill = color
+    //  this.two.update()
+  }
+
+  drawMatchHalf(color) {
+    if (this.matchHalf) {
+      this.group.remove(this.matchHalf)
+      this.two.remove(this.matchHalf)
+    }
+    this.matchHalf = this.two
+      .makeArcSegment(
+        getWidth() / 2,
+        getHeight() / 2,
+        0,
+        this.radius,
+        this.getArcStart(!this.isLeft),
+        this.getArcStartEnd(!this.isLeft)
+      )
+      .noStroke()
+    this.matchHalf.fill = color
+    this.group.add(this.matchHalf)
+    //  this.two.update()
+  }
 }
 export default new ExpDrawing()
