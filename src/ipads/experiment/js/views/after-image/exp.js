@@ -53,7 +53,6 @@ class ControlsComponent extends ConnectedBaseComponent {
     return
   }
   this.state.activeTestBlock = testBlock
-  console.log(this.state.activeTestBlock)
 
   if (isInduction(testBlock)) {
    this.state.isLeft = !this.state.isLeft

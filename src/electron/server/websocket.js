@@ -3,7 +3,7 @@ const parse = require("fast-json-parse")
 const WebSocket = require("ws")
 const colors = require("colors")
 
-module.exports = function({ server }) {
+module.exports = function({ server, port }) {
   const connections = new Map()
 
   const transformData = data => {
@@ -14,7 +14,6 @@ module.exports = function({ server }) {
     }
   }
   const send = (connection, data) => {
-    console.log(connection.readyState)
     connection.readyState === 1 &&
       connection.send(transformData(data))
   }
@@ -33,7 +32,7 @@ module.exports = function({ server }) {
     hasInterface() && send(getInterface(), data)
 
   const wss = new WebSocket.Server({
-    server,
+    port,
     perMessageDeflate: false,
   })
 
@@ -43,9 +42,13 @@ module.exports = function({ server }) {
       console.log(colors.green(`Got ${value.type}`))
       switch (value.type) {
         case "handshake": {
+          console.log("Handshake", value.data)
           ws.id = value.data
           connections.set(value.data, ws)
-          console.log("Handshake", value.data)
+          send(ws, {
+            type: "master:handshake",
+            data: { id: ws.id, readyState: ws.readyState },
+          })
           break
         }
         case "interface:brightness":

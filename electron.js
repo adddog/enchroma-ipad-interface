@@ -1,10 +1,27 @@
+const fs = require("fs")
 const path = require("path")
+const { spawn } = require("child_process")
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = true
 const IS_PROD = process.env.NODE_ENV !== "development"
 
 let mainWindow
 const { app, ipcMain, Menu, BrowserWindow } = require("electron")
 const { format } = require("url")
+
+fs.chmodSync(path.join(__dirname, "ngrok"), "755")
+const ngrok = spawn(path.join(__dirname, "ngrok"), [
+  "start",
+  "enchroma",
+  `--config`,
+  `${path.join(__dirname, "ngrok.yaml")}`,
+])
+
+ngrok.stdout.on("data", data => {
+  console.log(`child stdout:\n${data}`)
+})
+ngrok.stdout.on("error", data => {
+  console.log(`child stdout:\n${data}`)
+})
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -31,7 +48,7 @@ function createWindow() {
     mainWindow.loadURL(`http://localhost:7788`)
   }
 
-    mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
   if (!IS_PROD) {
   }
 
@@ -103,6 +120,7 @@ function createWindow() {
 app.on("ready", createWindow)
 app.on("window-all-closed", function() {
   if (process.platform !== "darwin") {
+    ngrok.kill('SIGINT')
     app.quit()
   }
 })

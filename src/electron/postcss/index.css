@@ -10,6 +10,7 @@ $c-gray-lightest: #22323;
 
 *{
   -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
 }
 
 body{
@@ -43,6 +44,7 @@ p{
 .code-editor{
   font-size: 0.53rem;
   display: flex;
+  min-height:550px;
 }
 
 .live-test{

@@ -42,4 +42,4 @@ app.post("/api", (req, reply) => {
 
 const server = http.createServer(app).listen(PORT)
 
-const WS = require("./websocket")({ server })
+const WS = require("./websocket")({ server, port: WS_PORT })

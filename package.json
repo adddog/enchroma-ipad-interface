@@ -119,6 +119,7 @@
       "target": "dmg"
     },
     "directories": {
+      "buildResources": "buildResources/",
       "output": "dist_electron/"
     },
     "files": [

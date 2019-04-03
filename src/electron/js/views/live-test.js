@@ -127,15 +127,14 @@ exports.LiveTest = (state, emit) => {
   return !!testBlock
     ? html`
         <div class="u-flex full-wh">
-          <div class="u-flex u-flex--stack u-flex--start full-h w-50">
+          <div class="u-flex u-flex--stack u-flex--start w-50">
             <div class="label">
               <span><i>test phase:</i></span>
               <span class="no-marg">${testBlock.TEST_NAME}</span>
             </div>
             <textarea class="code-editor full-wh ">
             ${testBlockString}
-        </textarea
-            >
+        </textarea>
           </div>
           <div class="u-flex u-flex--stack u-flex--start full-h w-50">
             ${color.render()}

@@ -17,8 +17,8 @@ class Component extends Nanocomponent {
 
   @autobind
   resize() {
-    this.el.width = this.parentNode.offsetWidth
-    this.el.height = this.parentNode.offsetHeight
+    this.el.width = this.parentWidth
+    this.el.height = this.parentHeight
     this.logic.draw()
   }
 
@@ -29,15 +29,23 @@ class Component extends Nanocomponent {
       `
   }
 
+  get parentWidth(){
+    return this.parentNode.offsetWidth
+  }
+
+  get parentHeight(){
+    return this.parentNode.offsetHeight
+  }
+
   load(el) {
     this.el = el
     this.parentNode = el.parentNode
     if(!this.parentNode) return
     const s =
-      Math.min(this.parentNode.offsetWidth, this.parentNode.offsetHeight) -
+      Math.min(this.parentWidth, this.parentHeight) -
       CIRCLE_MARGIN
-    this.el.width = s
-    this.el.height = s
+    //this.el.width = s
+    //this.el.height = s
     GL.init(this.el)
 
     AppStore.setValue('canvas:domrect', el.getBoundingClientRect())

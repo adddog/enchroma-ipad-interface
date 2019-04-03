@@ -32,7 +32,8 @@ class WS {
  }
 
  init(ip = 'localhost', port = process.env.WS_PORT) {
-  //this.client = new WebSocket(`wss://${ip}:${port}`)
+  //this.client = new WebSocket(`ws://${ip}:${port}`)
+  console.log('connecting to : `ws://enchroma.ngrok.io/');
   this.client = new WebSocket(`ws://enchroma.ngrok.io/`)
 
   this.client.onerror = (e) => {
