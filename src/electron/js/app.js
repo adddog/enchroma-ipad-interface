@@ -27,21 +27,25 @@ const getIntPort = () => (isProd ? API_PORT : INT_PORT)
 
 //class="absolute app w-100 h-100 sans-serif bg-white"
 function mainView(state, emitter, prev) {
+  const hostname = state.hostname || ""
   return html`
     <main
       class="u-flex u-flex--stack container full-wh p-2"
       onload=${onload}
     >
       <h4>This machine's IP: <mark>${window.IP}</mark></h4>
+      <h4>This machine can also be accessed at: <mark>http://${hostname.toLowerCase()}.local</mark></h4>
 
       <h4 class="p-2 bg-grey bg-rouded no-wrap">
         the <i>experiment</i> ipad should load
-        <mark>http://${window.IP}:${getExpPort()}/exp</mark>
+        <mark>http://${window.IP}:${getExpPort()}/exp</mark>or
+        <mark>http://${hostname.toLowerCase()}.local:${getExpPort()}/exp</mark>
       </h4>
 
       <h4 class="p-2 bg-grey bg-rouded no-wrap">
         the <i>interface</i> ipad should load
-        <mark>http://${window.IP}:${getIntPort()}/int</mark>
+        <mark>http://${window.IP}:${getIntPort()}/int</mark>or
+        <mark>http://${hostname.toLowerCase()}.local:${getIntPort()}/int</mark>
       </h4>
       <div class="u-flex u-flex--grow full-wh">
         ${indexView(state, emitter, prev)}
@@ -53,6 +57,7 @@ app.route(`*`, mainView)
 
 var tree = app.start()
 document.body.appendChild(tree)
+
 
 window.addEventListener("resize", e => {
   AppEmitter.emit("resize", {

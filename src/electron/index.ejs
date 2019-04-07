@@ -30,6 +30,18 @@
 <body class="w-100 h-100">
 </body>
 <script>
+const { spawn } = require('child_process')
+window.getHostname = function(cb) {
+  const child = spawn('scutil', ['--get', 'LocalHostName'])
+  child.stdout.on('data', function(buf) {
+    window.HOSTNAME = buf.toString().trim()
+    cb(window.HOSTNAME)
+    if (window.setHostName) {
+      window.setHostName(window.HOSTNAME)
+    }
+  });
+
+}
 window.IP = require('ip').address()
 </script>
 <script src=<%=process.env.NODE_ENV==="production" ? "bundle.min.js" : "bundle.js" %>

@@ -46,6 +46,7 @@ export default async function(state, emitter) {
  const afterImageTest = AfterImageTest()
  const config = await loadConfig(state)
  state.activeTest = {}
+ state.hostname = ""
  state.activeTestBlock = null
  state.testStarted = false
  state.testsConfigs = config
@@ -149,5 +150,9 @@ export default async function(state, emitter) {
   downloadJson(getTestResultsOnly(state), 'test-results')
  })
 
- emitter.emit('render')
+ window.getHostname(hostname => {
+  state.hostname = hostname
+  emitter.emit('render')
+ })
+
 }
