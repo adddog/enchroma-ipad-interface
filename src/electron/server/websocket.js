@@ -31,6 +31,7 @@ module.exports = function({ server, port }) {
   const sendInterface = data =>
     hasInterface() && send(getInterface(), data)
 
+    console.log('port', port);
   const wss = new WebSocket.Server({
     port,
     perMessageDeflate: false,

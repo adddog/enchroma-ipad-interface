@@ -3,13 +3,11 @@ const http = require("http")
 const express = require("express")
 const cors = require("cors")
 var bodyParser = require("body-parser")
-console.log(path.join(process.cwd(), ".env"))
 const dotenv = require("dotenv").config({
-  path: path.join(__dirname, ".env.prod"),
+  path: path.join(__dirname, ".env"),
 })
-const PORT = process.env.API_PORT || 3000
-const WS_PORT = process.env.WS_PORT || 3333
-
+const PORT = process.env.API_PORT
+const WS_PORT = process.env.WS_PORT
 const app = express()
 app.use(cors()) // for parsing application/json
 app.use(bodyParser.json()) // for parsing application/json

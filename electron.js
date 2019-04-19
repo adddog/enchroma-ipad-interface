@@ -12,6 +12,7 @@ fs.chmodSync(path.join(__dirname, "ngrok"), "755")
 const ngrok = spawn(path.join(__dirname, "ngrok"), [
   "start",
   "enchroma",
+  "enchromawss",
   `--config`,
   `${path.join(__dirname, "ngrok.yaml")}`,
 ])
