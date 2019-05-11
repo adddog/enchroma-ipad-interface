@@ -1307,6 +1307,10 @@ legend {
   color: #bcc3ce;
 }
 
+.form-input::-moz-placeholder {
+  color: #bcc3ce;
+}
+
 .form-input::placeholder {
   color: #bcc3ce;
 }
@@ -4666,6 +4670,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
   z-index: 4;
 }
 
+.CodeMirror-gutter-wrapper ::-moz-selection { background-color: transparent }
+
 .CodeMirror-gutter-wrapper ::selection { background-color: transparent }
 
 .CodeMirror-gutter-wrapper ::-moz-selection { background-color: transparent }
@@ -4765,6 +4771,8 @@ div.CodeMirror-dragcursors {
 .CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
 
 .CodeMirror-crosshair { cursor: crosshair; }
+
+.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: #d7d4f0; }
 
 .CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: #d7d4f0; }
 

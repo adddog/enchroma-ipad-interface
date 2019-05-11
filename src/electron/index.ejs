@@ -30,6 +30,7 @@
 <body class="w-100 h-100">
 </body>
 <script>
+
 const { spawn } = require('child_process')
 window.getHostname = function(cb) {
   const child = spawn('scutil', ['--get', 'LocalHostName'])
@@ -40,12 +41,25 @@ window.getHostname = function(cb) {
       window.setHostName(window.HOSTNAME)
     }
   });
-
 }
+
+const Store = require('electron-store')
+const store = new Store();
+window.setInStore = function(k, v) {
+  store.set(k,v);
+}
+
+window.getInStore = function(k) {
+  return store.get(k)
+}
+
+window.deleteInStore = function(k) {
+  store.delete(k)
+}
+
 window.IP = require('ip').address()
 </script>
-<script src=<%=process.env.NODE_ENV==="production" ? "bundle.min.js" : "bundle.js" %>
->
+<script src=<%=process.env.NODE_ENV==="production" ? "bundle.min.js" : "bundle.js" %>>
 </script>
 
 </html>

@@ -8,21 +8,26 @@ let mainWindow
 const { app, ipcMain, Menu, BrowserWindow } = require("electron")
 const { format } = require("url")
 
-fs.chmodSync(path.join(__dirname, "ngrok"), "755")
-const ngrok = spawn(path.join(__dirname, "ngrok"), [
-  "start",
-  "enchroma",
-  "enchromawss",
-  `--config`,
-  `${path.join(__dirname, "ngrok.yaml")}`,
-])
+let ngrok
+if (process.env.NGROK == "true") {
+  fs.chmodSync(path.join(__dirname, "ngrok"), "755")
+  const ngorkCmd = [
+    "start",
+    "enchroma",
+    "enchromawss",
+    `--config`,
+    `${path.join(__dirname, "ngrok.yaml")}`,
+  ]
+  console.log(ngorkCmd.join(" "))
+  ngrok = spawn(path.join(__dirname, "ngrok"), ngorkCmd)
 
-ngrok.stdout.on("data", data => {
-  console.log(`child stdout:\n${data}`)
-})
-ngrok.stdout.on("error", data => {
-  console.log(`child stdout:\n${data}`)
-})
+  ngrok.stdout.on("data", data => {
+    console.log(`child stdout:\n${data}`)
+  })
+  ngrok.stdout.on("error", data => {
+    console.log(`child stdout:\n${data}`)
+  })
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -121,11 +126,15 @@ function createWindow() {
 app.on("ready", createWindow)
 
 app.on("before-quit", function() {
-  ngrok.kill("SIGINT")
+  if (ngrok) {
+    ngrok.kill("SIGINT")
+  }
 })
 app.on("window-all-closed", function() {
   if (process.platform !== "darwin") {
-    ngrok.kill("SIGINT")
+    if (ngrok) {
+      ngrok.kill("SIGINT")
+    }
     app.quit()
   }
 })

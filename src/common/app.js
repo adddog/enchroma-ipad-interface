@@ -21,6 +21,8 @@ export default app => {
  app.use(CommonModel)
  app.use(AppModel)
 
+
+
  window.addEventListener('resize', e => {
   AppEmitter.emit('resize', {
    width: window.innerWidth,

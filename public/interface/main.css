@@ -1307,6 +1307,10 @@ legend {
   color: #bcc3ce;
 }
 
+.form-input::-moz-placeholder {
+  color: #bcc3ce;
+}
+
 .form-input::placeholder {
   color: #bcc3ce;
 }

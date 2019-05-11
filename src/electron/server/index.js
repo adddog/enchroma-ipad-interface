@@ -3,8 +3,9 @@ const http = require("http")
 const express = require("express")
 const cors = require("cors")
 var bodyParser = require("body-parser")
+
 const dotenv = require("dotenv").config({
-  path: path.join(__dirname, ".env"),
+  path: path.join(__dirname, "../../../", ".env"),
 })
 const PORT = process.env.API_PORT
 const WS_PORT = process.env.WS_PORT
@@ -39,5 +40,4 @@ app.post("/api", (req, reply) => {
 })
 
 const server = http.createServer(app).listen(PORT)
-
 const WS = require("./websocket")({ server, port: WS_PORT })

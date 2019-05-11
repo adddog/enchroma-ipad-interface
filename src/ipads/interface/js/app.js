@@ -6,6 +6,7 @@ import DevModel from 'c:/dev-model'
 import AppInit from 'c:/app'
 import AppStore from 'c:/store'
 import Websocket from 'i:lib/websocket'
+import WebRTC from "pad:/webrtc"
 /*************
  *  views
  ************ */
@@ -14,6 +15,8 @@ import interfaceView from 'i:views/interface'
 var app = choo()
 AppInit(app)
 app.use(DevModel)
+
+const webrtc = new WebRTC()
 
 function mainView(state, prev, send) {
  return html`
