@@ -71,6 +71,7 @@ export default async function(state, emitter) {
   function onTestComplete(data) {
     state.testPaused = true
     state.testComplete = true
+    AppEmitter.emit("ipads:tests:complete")
     emitter.emit("render")
   }
 

@@ -46,6 +46,10 @@ class WS extends WSBase {
    this.send(data, 'master:test:stop')
   })
 
+  AppEmitter.on('ipads:tests:complete', data => {
+   this.send(data, 'master:test:complete')
+  })
+
   AppEmitter.on('ipads:reload', data => {
    this.send(data, 'master:reload')
   })

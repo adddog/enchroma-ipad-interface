@@ -6112,6 +6112,70 @@ a.text-error:visited {
           transform-origin: 0% 0%;
 }
 
+html,
+body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #333;
+}
+
+.flex-c {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.pos-tl {
+  left: 0;
+  top: 0;
+}
+
+.c-white {
+  color: white;
+}
+
+.pos-tr {
+  top: 0;
+  right: 0;
+}
+
+.pos-bl {
+  bottom: 0;
+  left: 0;
+}
+
+.unicode {
+  color: transparent;
+}
+
+.unicode.--connected {
+    text-shadow: 0 0 0 green;
+  }
+
+.unicode.--disconnected {
+    text-shadow: 0 0 0 red;
+  }
+
+.full-wh{
+  width:100%;
+  height:100%;
+}
+
 /* ************
 *  flex
 ************ */

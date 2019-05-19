@@ -15,7 +15,7 @@ import html from "choo/html"
 const renderInterface = (state, emit) => {
   AppStore.on("update", () => {})
   return html`
-    <p class="p-absolute pos-tl c-white">interface</p>
+    <p class="p-absolute pos-tl c-white">${window.appId}</p>
     <h1><mark>waiting for a test...</mark></h1>
   `
 }

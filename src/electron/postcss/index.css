@@ -1,57 +1,56 @@
 $c-gray-lightest: #22323;
 
-@import 'normalize.css';
-@import 'spectre.css';
-@import 'codemirror/lib/codemirror.css';
-@import '../../postcss/u-flex.css';
-@import '../../postcss/u-display.css';
-@import '../../postcss/u-buttons.css';
-@import './views/interface';
+@import "normalize.css";
+@import "spectre.css";
+@import "codemirror/lib/codemirror.css";
+@import "../../postcss/u-flex.css";
+@import "../../postcss/u-display.css";
+@import "../../postcss/u-buttons.css";
+@import "./views/interface";
 
-*{
+* {
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
 }
 
-body{
+body {
   min-height: 100vh;
 }
 
-p{
+p {
   margin-bottom: 0.2rem;
 }
 
-.app{
+.app {
   overflow: hidden;
 }
 
-
-.no-wrap{
+.no-wrap {
   white-space: nowrap;
 }
-.bg-rouded{
+.bg-rouded {
   border-radius: 0.4rem;
 }
 
-.bg-grey{
+.bg-grey {
   background-color: $c-gray-lightest;
 }
 
-.bg-grey--light{
-  background-color: #f5f6ff
+.bg-grey--light {
+  background-color: #f5f6ff;
 }
 
-.code-editor{
+.code-editor {
   font-size: 0.53rem;
   display: flex;
-  min-height:550px;
+  min-height: 550px;
 }
 
-.live-test{
-  &-color{
+.live-test {
+  &-color {
     position: absolute;
-    top:0;
-    right:0;
+    top: 0;
+    right: 0;
     width: 30px;
     height: 30px;
     border-radius: 50%;

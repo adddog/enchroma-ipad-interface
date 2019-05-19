@@ -13,7 +13,7 @@ class WS extends iPadWSBase {
   const { type, data } = socketData
   switch (type) {
    case 'interface:touches':
-      WebsocketHandlers.testTouches(data)
+      // WebsocketHandlers.testTouches(data)
     break
   }
  }

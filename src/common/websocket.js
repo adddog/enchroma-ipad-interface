@@ -40,6 +40,7 @@ class WS {
     }
 
     this.client.onopen = () => {
+      console.log('WebSocket connected');
       AppEmitter.emit("websocket:connected", true)
       this.onopen()
       const _self = this
@@ -50,6 +51,7 @@ class WS {
     }
 
     this.client.onclose = () => {
+      console.log('WebSocket disconnected');
       AppEmitter.emit("websocket:connected", false)
       setTimeout(() => {
         this.client.close()

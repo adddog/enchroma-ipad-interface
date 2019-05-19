@@ -4427,19 +4427,19 @@ a.text-error:visited {
 }
 
 html,
-body{
+body {
   position: fixed;
-  top:0;
-  left:0;
-  height:100%;
-  width:100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
-body{
+body {
   background-color: #333;
 }
 
-.flex-c{
+.flex-c {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -4454,13 +4454,40 @@ body{
           align-items: center;
 }
 
-.pos-tl{
-  left:0;
-  top:0;
+.pos-tl {
+  left: 0;
+  top: 0;
 }
 
-.c-white{
+.c-white {
   color: white;
+}
+
+.pos-tr {
+  top: 0;
+  right: 0;
+}
+
+.pos-bl {
+  bottom: 0;
+  left: 0;
+}
+
+.unicode {
+  color: transparent;
+}
+
+.unicode.--connected {
+    text-shadow: 0 0 0 green;
+  }
+
+.unicode.--disconnected {
+    text-shadow: 0 0 0 red;
+  }
+
+.full-wh{
+  width:100%;
+  height:100%;
 }
 
 /* ************

@@ -29,6 +29,7 @@ class WS extends WSBase {
       }
       if (!socketData) return
       const { type, data } = socketData
+      console.log(type,data);
       switch (type) {
         case "master:handshake":
           console.log(data)

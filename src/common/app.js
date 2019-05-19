@@ -30,7 +30,4 @@ export default app => {
   })
  })
 
- AppEmitter.on('websocket:connected', val => {
-  console.log('websocket:connected', val);
- })
 }

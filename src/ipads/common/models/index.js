@@ -4,7 +4,7 @@ import { parseTestConfig } from "c:/test-configs"
 import AppEmitter from "c:/emitter"
 
 export default async function(state, emitter) {
-
+  state.websocketConnected = false
   AppEmitter.on("test:set", data => {
     state.paused = false
     state.waiting = true
@@ -31,6 +31,15 @@ export default async function(state, emitter) {
       state.activeTest.index = data.index
       emitter.emit("render")
     }
+  })
+
+  AppEmitter.on("websocket:connected", () => {
+    state.websocketConnected = true
+    emitter.emit("render")
+  })
+  AppEmitter.on("websocket:disconnected", () => {
+    state.websocketConnected = false
+    emitter.emit("render")
   })
 
   AppEmitter.on("render", () => emitter.emit("render"))

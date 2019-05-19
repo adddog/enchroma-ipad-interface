@@ -2,6 +2,7 @@
 @import 'tachyons';
 @import 'spectre.css';
 @import './views/interface';
+@import '../../postcss/index';
 @import '../../../postcss/u-flex.css';
 @import '../../../postcss/u-display.css';
 @import '../../../postcss/u-buttons.css';

@@ -1,64 +1,99 @@
-import { SIGNALING_URL } from "c:/constants"
 import SocketPeer from "socketpeer"
+import { autobind } from "core-decorators"
+import AppEmitter from "c:/emitter"
+import { SIGNALING_URL } from "c:/constants"
+import WebsocketHandlers from "exp:lib/handlers"
 
 export default class WS {
   constructor() {
-    console.log(SIGNALING_URL);
-    var peer = new SocketPeer({
-      pairCode: "yolo",
+    this.peer = new SocketPeer({
+      pairCode: "enchroma",
       url: SIGNALING_URL,
+      debug: false,
     })
 
-    peer.on("connect", function() {
-      console.log("peer connected")
-    })
+    this.peer.on("connect", this.onConnect)
+    this.peer.on("connect_timeout", this.onConnectTimeout)
+    this.peer.on("data", this.onData)
+    this.peer.on("rtc.signal", this.onRtcSignal)
+    this.peer.on("peer.found", this.onPeerFound)
+    this.peer.on("upgrade", this.onUpgrade)
+    this.peer.on("upgrade_attempt", this.onUpgradeAttempt)
+    this.peer.on("downgrade", this.onDowngrade)
+    this.peer.on("warning", this.onWarning)
+    this.peer.on("error", this.onError)
 
-    peer.on("connect_timeout", function() {
-      console.error(
-        "connection timed out (after %s ms)",
-        peer.timeout
+    AppEmitter.on("interface:touches", coords => {
+      this.send(
+        JSON.stringify({ type: "interface:touches", data: coords })
       )
     })
+  }
 
-    peer.on("data", function(data) {
-      console.log("data received:", data)
-    })
+  @autobind
+  onConnect() {
+    console.log("peer connected")
+  }
+  @autobind
+  onConnectTimeout() {
+    console.error(
+      "connection timed out (after %s ms)",
+      this.peer.timeout
+    )
+  }
 
-    peer.on("rtc.signal", function() {
-      console.log("WebRTC signalling")
-    })
+  @autobind
+  onData(payload) {
+    if (payload.type === "interface:touches") {
+      WebsocketHandlers.testTouches(payload.data)
+    }
+  }
 
-    peer.on("peer.found", function(data) {
-      console.log("peer found:", data.initiator)
-      peer.send("hello")
-    })
+  @autobind
+  onRtcSignal() {
+    console.log("WebRTC signalling")
+  }
 
-    peer.on("upgrade", function() {
-      console.log(
-        "successfully upgraded WebSocket ⇒ to WebRTC peer connection"
-      )
-      peer.send("upgraded")
-    })
+  @autobind
+  onPeerFound(data) {
+  }
 
-    peer.on("upgrade_attempt", function() {
-      console.log(
-        "attempting to upgrade WebSocket ⇒ to WebRTC peer connection (attempt number: %d)",
-        peer._connections.rtc.attempt
-      )
-    })
+  @autobind
+  onUpgrade() {
+    console.log(
+      "successfully upgraded WebSocket ⇒ to WebRTC peer connection"
+    )
+  }
 
-    peer.on("downgrade", function() {
-      console.log(
-        "downgraded WebRTC peer connection ⇒ to WebSocket connection"
-      )
-    })
+  @autobind
+  onUpgradeAttempt() {
+    console.log(
+      "attempting to upgrade WebSocket ⇒ to WebRTC peer connection (attempt number: %d)",
+      this.peer._connections.rtc.attempt
+    )
+  }
 
-    peer.on("warning", function(data) {
-      console.error("warning:", data.message)
-    })
+  @autobind
+  onDowngrade() {
+    console.log(
+      "downgraded WebRTC peer connection ⇒ to WebSocket connection"
+    )
+  }
 
-    peer.on("error", function(err) {
-      console.error("error:", err)
-    })
+  @autobind
+  onWarning(data) {
+    console.error("warning:", data.message)
+  }
+
+  @autobind
+  onError(err) {
+    console.error("error:", err)
+  }
+  /* ------------------------ */
+  //
+  /* ------------------------ */
+  @autobind
+  send(data) {
+    this.peer.send(data)
   }
 }

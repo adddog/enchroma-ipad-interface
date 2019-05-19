@@ -64,7 +64,7 @@ module.exports = function({ server, port }) {
         case "interface:brightness":
         case "interface:touches":
           {
-            sendExperiment(data)
+            // sendExperiment(data)
             sendMaster(data)
           }
           break
@@ -72,7 +72,8 @@ module.exports = function({ server, port }) {
         case "master:test:set":
         case "master:test:pause":
         case "master:test:update":
-        case "master:test:stop": {
+        case "master:test:stop":
+        case "master:test:complete": {
           sendExperiment(value)
           sendInterface(value)
           break
