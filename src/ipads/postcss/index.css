@@ -35,12 +35,12 @@ body {
 }
 
 .unicode {
-  color: transparent;
+  opacity: 0.03;
   &.--connected {
-    text-shadow: 0 0 0 green;
+    opacity: 1;
   }
   &.--disconnected {
-    text-shadow: 0 0 0 red;
+    opacity: 0.05;
   }
 }
 

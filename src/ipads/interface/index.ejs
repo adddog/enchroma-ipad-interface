@@ -33,5 +33,6 @@
   window.appId = "interface"
   console.log('here', window.appId);
 </script>
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script src=<%=process.env.NODE_ENV==="production" ? "interface/bundle.min.js" : "bundle.js"%>></script>
 </html>

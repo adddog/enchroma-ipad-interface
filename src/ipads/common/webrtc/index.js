@@ -1,14 +1,14 @@
 import SocketPeer from "socketpeer"
 import { autobind } from "core-decorators"
 import AppEmitter from "c:/emitter"
-import { SIGNALING_URL } from "c:/constants"
+import { WS_URL } from "c:/constants"
 import WebsocketHandlers from "exp:lib/handlers"
 
 export default class WS {
   constructor() {
     this.peer = new SocketPeer({
       pairCode: "enchroma",
-      url: SIGNALING_URL,
+      url: WS_URL,
       debug: false,
     })
 
@@ -20,6 +20,7 @@ export default class WS {
     this.peer.on("upgrade", this.onUpgrade)
     this.peer.on("upgrade_attempt", this.onUpgradeAttempt)
     this.peer.on("downgrade", this.onDowngrade)
+    this.peer.on("close", this.onClose)
     this.peer.on("warning", this.onWarning)
     this.peer.on("error", this.onError)
 
@@ -34,12 +35,14 @@ export default class WS {
   onConnect() {
     console.log("peer connected")
   }
+
   @autobind
   onConnectTimeout() {
     console.error(
       "connection timed out (after %s ms)",
       this.peer.timeout
     )
+    AppEmitter.emit("logs", "connection timed out")
   }
 
   @autobind
@@ -52,14 +55,21 @@ export default class WS {
   @autobind
   onRtcSignal() {
     console.log("WebRTC signalling")
+    AppEmitter.emit("logs", "WebRTC signalling")
   }
 
   @autobind
   onPeerFound(data) {
+    AppEmitter.emit("logs", "Peer found")
   }
 
   @autobind
   onUpgrade() {
+    AppEmitter.emit(
+      "logs",
+      "successfully upgraded WebSocket ⇒ to WebRTC peer connection"
+    )
+    AppEmitter.emit("webrtc:connected")
     console.log(
       "successfully upgraded WebSocket ⇒ to WebRTC peer connection"
     )
@@ -71,13 +81,23 @@ export default class WS {
       "attempting to upgrade WebSocket ⇒ to WebRTC peer connection (attempt number: %d)",
       this.peer._connections.rtc.attempt
     )
+    AppEmitter.emit(
+      "logs",
+      `attempting to upgrade WebSocket ⇒ to WebRTC peer connection (attempt number: ${
+        this.peer._connections.rtc.attempt
+      })`
+    )
   }
 
   @autobind
   onDowngrade() {
-    console.log(
-      "downgraded WebRTC peer connection ⇒ to WebSocket connection"
-    )
+    AppEmitter.emit("webrtc:disconnect")
+    AppEmitter.emit("logs", "Downgraded")
+  }
+
+  @autobind
+  onClose() {
+    AppEmitter.emit("webrtc:disconnect")
   }
 
   @autobind
@@ -87,6 +107,7 @@ export default class WS {
 
   @autobind
   onError(err) {
+    AppEmitter.emit("logs", `Error ${err}`)
     console.error("error:", err)
   }
   /* ------------------------ */

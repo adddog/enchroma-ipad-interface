@@ -3,12 +3,16 @@ const path = require("path")
 const { spawn } = require("child_process")
 process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = true
 const IS_PROD = process.env.NODE_ENV !== "development"
+const dotenv = require("dotenv").config({
+  path: path.join(__dirname, IS_PROD ? ".env.prod" : ".env"),
+})
 
 let mainWindow
 const { app, ipcMain, Menu, BrowserWindow } = require("electron")
 const { format } = require("url")
 
 let ngrok
+console.log("process.env.NGROK ", process.env.NGROK)
 if (process.env.NGROK == "true") {
   fs.chmodSync(path.join(__dirname, "ngrok"), "755")
   const ngorkCmd = [
@@ -54,8 +58,8 @@ function createWindow() {
     mainWindow.loadURL(`http://localhost:7788`)
   }
 
-  mainWindow.webContents.openDevTools()
   if (!IS_PROD) {
+    mainWindow.webContents.openDevTools()
   }
 
   mainWindow.on("closed", function() {

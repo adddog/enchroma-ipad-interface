@@ -2,7 +2,7 @@ import Color from "color"
 export const isProd = process.env.NODE_ENV === "production"
 export const isDev = process.env.NODE_ENV !== "production"
 export const isDevTest = process.env.DEV_TEST != "false"
-export const isNgrok = !!process.env.NGROK == "true"
+export const isNgrok = process.env.NGROK == "true"
 export const USE_WSS = process.env.USE_WSS == "true"
 export const PLATFORM = process.env.PLATFORM
 export const NGROK_API = process.env.NGROK_HTTP
@@ -12,19 +12,17 @@ export const INT_PORT = process.env.INT_PORT
 export const EXP_PORT = process.env.EXP_PORT
 export const API_PORT = process.env.API_PORT
 
-export const API = isNgrok
- ? NGROK_API
- : `${isProd ? "" : `http://localhost:${process.env.API_PORT}`}/api`
 
+export const HTTP_PROTOCAL = isProd ? "https" : "http"
 export const WS_PROTOCAL = USE_WSS ? "wss" : "ws"
+
+export const API = isNgrok
+ ? `${HTTP_PROTOCAL}://${NGROK_API}`
+ : `${isProd ? "" : `http://localhost:${process.env.API_PORT}`}/api`
 
 export const WS_URL = isNgrok
  ? `${WS_PROTOCAL}://${NGROK_WS}`
  : `${WS_PROTOCAL}://localhost:${WS_PORT}`
-
-export const SIGNALING_URL = isNgrok
- ? `${NGROK_API}/socketpeer`
- : `${`http://localhost:${process.env.WS_PORT}`}/socketpeer/`
 
 /* ------------------------ */
 //  UI

@@ -1,5 +1,10 @@
 import AppEmitter from "c:/emitter"
-import { downloadJson, importFile } from "c:/util"
+import DateAndTime from "date-and-time"
+import {
+  downloadJson,
+  downloadCSVFromJSON,
+  importFile,
+} from "c:/util"
 import { isMatch } from "c:/state-machine"
 import WebSocket from "el:lib/websocket"
 import { getJSON } from "i:lib/util"
@@ -19,7 +24,7 @@ import AfterImageTest from "./tests/after-image"
 async function loadConfig(state) {
   const data = window.getInStore("test-config")
   if (data) {
-   return Promise.resolve(JSON.parse(data))
+    return Promise.resolve(JSON.parse(data))
   }
   return await getJSON("data/tests-config.json")
 }
@@ -34,13 +39,21 @@ const createTestResult = state => {
     })
     return
   }
-  const [red, green, blue] = getRGBFromInterfacePayload(
+  let [red, green, blue] = getRGBFromInterfacePayload(
     getInterfaceTouches()
   )
+  red = Math.floor(red)
+  blue = Math.floor(blue)
+  green = Math.floor(green)
+  console.log(getActiveTestBlockData(state))
   const colors = { red, green, blue }
+  const test = getActiveTestBlockData(state)
   state.testResult.push({
-    test: getActiveTestBlockData(state),
+    test,
     result: {
+      name: test.TEST_NAME,
+      matchDuration: test.MATCH_DURATION,
+      testRGB: test.RGB_TEST_VALUES.join(" "),
       ...colors,
     },
   })
@@ -164,7 +177,10 @@ export default async function(state, emitter) {
    *  results
    ************ */
   emitter.on("el:results:export", () => {
-    downloadJson(getTestResultsOnly(state), "test-results")
+    downloadCSVFromJSON(
+      getTestResultsOnly(state),
+      `results-${DateAndTime.format(new Date(), `YYYY/MM/DD HH:mm`)}`
+    )
   })
 
   window.getHostname(hostname => {

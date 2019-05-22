@@ -29,24 +29,27 @@ class WS extends WSBase {
       }
       if (!socketData) return
       const { type, data } = socketData
-      console.log(type,data);
       switch (type) {
         case "master:handshake":
-          console.log(data)
+          console.log(type, data)
           break
         case "master:reload":
           window.location.reload()
           break
         case "master:test:set":
+          console.log(type, data)
           WebsocketHandlers.testSet(data)
           break
         case "master:test:pause":
+          console.log(type, data)
           WebsocketHandlers.testPause(data)
           break
         case "master:test:stop":
+          console.log(type, data)
           WebsocketHandlers.testStop(data)
           break
         case "master:test:update":
+          console.log(type, data)
           WebsocketHandlers.testUpdate(data)
           break
       }

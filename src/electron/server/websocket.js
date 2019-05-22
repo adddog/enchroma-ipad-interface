@@ -38,12 +38,10 @@ module.exports = function({ server, port }) {
   })
 
   wss.on("connection", function connection(ws) {
-
     onConnection(ws)
 
     ws.on("message", function incoming(data) {
       const { value } = parse(data)
-      console.log(colors.green(`Got ${value.type}`))
       switch (value.type) {
         case "handshake": {
           console.log("Handshake", value.data)
@@ -64,7 +62,9 @@ module.exports = function({ server, port }) {
         case "interface:brightness":
         case "interface:touches":
           {
-            // sendExperiment(data)
+            if (!rtcconnected) {
+              // sendExperiment(data)
+            }
             sendMaster(data)
           }
           break
@@ -99,7 +99,7 @@ module.exports = function({ server, port }) {
 
   var peersWaiting = Object.create(null)
   var clientConnections = Object.create(null)
-
+  var rtcconnected = false
   function closeConnection(pairCode, filter) {
     if (!filter) {
       // Create a no-op function.
@@ -130,15 +130,11 @@ module.exports = function({ server, port }) {
     client.sendMessage = sendMessage.bind(client)
 
     client.on("message", msg => {
-      console.log("[message] Received message: %s", msg)
-
       var obj = JSON.parse(msg)
       client.emit("message." + obj.type, obj.data)
     })
 
     client.on("message.data", data => {
-      console.log("[pair] Received data:", data)
-
       if (client.peer) {
         client.peer.sendMessage("data", data)
       }
@@ -191,6 +187,7 @@ module.exports = function({ server, port }) {
       console.log("[rtc.connect] Received")
 
       if (client.peer) {
+       //  rtcconnected = true
         client.peer.sendMessage("rtc.connect")
       }
     })
@@ -203,6 +200,7 @@ module.exports = function({ server, port }) {
       ) {
         peersWaiting[pairCode] = null
       }
+      rtcconnected = false
 
       if (client.peer) {
         peersWaiting[pairCode] = client.peer

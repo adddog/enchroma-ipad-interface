@@ -1,4 +1,5 @@
 import { isUndefined, isString } from "lodash"
+import jsonexport from "jsonexport"
 import safeStringify from "fast-safe-stringify"
 
 export const qs = (string, el = document) => el.querySelector(string)
@@ -41,6 +42,21 @@ export function downloadJson(data, fileName) {
   a.style.display = "none"
   a.click()
   document.body.removeChild(a)
+}
+
+export function downloadCSVFromJSON(data, fileName) {
+  jsonexport(data, function(err, csv) {
+    if (err) return console.log(err)
+    var dataStr =
+      "data:text/text;charset=utf-8," + encodeURIComponent(csv)
+    let a = document.createElement("a")
+    a.setAttribute("href", dataStr)
+    a.setAttribute("download", `${fileName}.csv`)
+    document.body.appendChild(a)
+    a.style.display = "none"
+    a.click()
+    document.body.removeChild(a)
+  })
 }
 
 export function importFile() {
