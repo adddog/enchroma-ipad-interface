@@ -1,19 +1,20 @@
 /* ************
-*  NO USE
-************ */
-import Nanocomponent from 'nanocomponent'
-import { autobind } from 'core-decorators'
-import html from 'choo/html'
-import { map } from 'lodash'
-import { prefix } from 'inline-style-prefixer'
-import { GREY_NEUTRAL, CIRCLE_MARGIN } from 'c:/constants'
-import AppStore from 'c:/store'
-import AppEmitter from 'c:/emitter'
-import { qs } from 'i:lib/util'
+ *  NO USE
+ ************ */
+import Nanocomponent from "nanocomponent"
+import { autobind } from "core-decorators"
+import html from "choo/html"
+import { map } from "lodash"
+import { prefix } from "inline-style-prefixer"
+import { GREY_NEUTRAL, CIRCLE_MARGIN } from "c:/constants"
+import AppStore from "c:/store"
+import AppEmitter from "c:/emitter"
+import { qs } from "i:lib/util"
+import Canvas from "pad:/views/canvas"
 
-import AfterImageLogic from 'exp:logic/after-image-logic'
+import AfterImageLogic from "exp:logic/after-image-logic"
 
-const style = {
+/*const style = {
  transform: 'rotate(90deg) translateY(100%)',
 }
 
@@ -44,7 +45,6 @@ class Component extends Nanocomponent {
   this.setSize(AppStore.store.get('res'))
   const width =
    Math.min(this.el.offsetWidth, this.el.offsetHeight) - CIRCLE_MARGIN
-   console.log(this.canvas);
   this.afterImageLogic.init(this.canvas, { width })
   this.afterImageLogic.draw()
  }
@@ -53,12 +53,27 @@ class Component extends Nanocomponent {
   return false // Never re-render
  }
 }
-const canvas = new Component()
+*/
+
+function onLoad(el) {
+  const afterImageLogic = AfterImageLogic()
+  const canvas = el
+  const parentNode = el.parentNode
+  const s =
+    Math.min(
+      parentNode.offsetWidth,
+      parentNode.offsetHeight
+    ) - CIRCLE_MARGIN
+  afterImageLogic.init(canvas, { width: s })
+  afterImageLogic.draw()
+}
+
+const canvas = new Canvas({ onLoad })
 
 module.exports = (state, emit) => {
- return html`
-  <article class="h-100 w-100">
-   ${canvas.render(state, emit)}
-  </article>
- `
+  return html`
+    <article class="h-100 w-100">
+      ${canvas.render(state, emit)}
+    </article>
+  `
 }

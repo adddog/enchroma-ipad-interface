@@ -6,13 +6,13 @@ import { GREY_NEUTRAL, CIRCLE_MARGIN } from 'c:/constants'
 import AppEmitter from 'c:/emitter'
 import AppStore from 'c:/store'
 import { getRGBString } from 'i:lib/drawing-helpers'
-import Canvas from "pad:/views/canvas"
 import GL from 'i:gl'
 import Logic from './circle-logic'
 
-/*class Component extends Nanocomponent {
-  constructor() {
+export default class Component extends Nanocomponent {
+  constructor(props) {
     super()
+    this.props = props
     AppEmitter.on('resize', this.resize)
   }
 
@@ -20,13 +20,11 @@ import Logic from './circle-logic'
   resize() {
     this.el.width = this.parentWidth
     this.el.height = this.parentHeight
-    this.logic.draw()
   }
 
   createElement() {
-    this.logic = Logic()
     return html`
-        <canvas class="circle-canvas"></canvas>
+        <canvas></canvas>
       `
   }
 
@@ -41,46 +39,17 @@ import Logic from './circle-logic'
   load(el) {
     this.el = el
     this.parentNode = el.parentNode
+    if(this.props){
+      this.props.onLoad(this.el)
+    }
     if(!this.parentNode) return
     const s =
       Math.min(this.parentWidth, this.parentHeight) -
       CIRCLE_MARGIN
-    //this.el.width = s
-    //this.el.height = s
-    GL.init(this.el)
-
     AppStore.setValue('canvas:domrect', el.getBoundingClientRect())
-    this.logic.init(el, { width: s, height: s })
   }
 
   update() {
     return false // Never re-render
   }
-}
-const circle = new Component()
-*/
-
-function onLoad(el) {
-  const logic = Logic()
-  const afterImageLogic = AfterImageLogic()
-  const canvas = el
-  const parentNode = el.parentNode
-  const s =
-    Math.min(
-      parentNode.offsetWidth,
-      parentNode.offsetHeight
-    ) - CIRCLE_MARGIN
-  logic.init(el, { width: s, height: s })
-}
-
-const canvas = new Canvas({ onLoad })
-
-module.exports = (state, emit) => {
-  return html`
-        <article class="column h-100 interface-col circle-container" style="background-color: ${getRGBString(
-          GREY_NEUTRAL,
-        )}">
-          ${canvas.render(state, emit)}
-        </article>
-      `
 }

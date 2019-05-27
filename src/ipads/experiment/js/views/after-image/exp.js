@@ -58,7 +58,7 @@ class ControlsComponent extends ConnectedBaseComponent {
     if (isInduction(testBlock)) {
       this.dotDrawing.resume()
 
-      this.state.isLeft = !this.state.isLeft
+     //  this.state.isLeft = !this.state.isLeft
       Drawing.drawInductionHalf(
         getRGBStringArray(testBlock.RGB_TEST_VALUES),
         this.state.isLeft
