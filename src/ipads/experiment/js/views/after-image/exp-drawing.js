@@ -8,9 +8,11 @@ import {
 import { getRGBStringArray } from "c:/util"
 
 const HALF_PI = Math.PI / 2
+const TWO_PI = Math.PI * 2
 const THREE_Q_PI = Math.PI * 1.5
-const HALF_PI_END = HALF_PI + Math.PI
+const THREE_Q_CIRC = HALF_PI * 3
 const THREE_Q_PI_END = THREE_Q_PI + Math.PI
+const HALF_PI_END = HALF_PI + Math.PI
 
 class ExpDrawing {
   setTwo(two) {
@@ -50,8 +52,8 @@ class ExpDrawing {
         getHeight() / 2,
         0,
         this.radius,
-        this.getArcStart(),
-        this.getArcStartEnd()
+        -HALF_PI ,
+        HALF_PI
       )
       .noStroke()
     this.inductionHalf.fill = color
@@ -75,8 +77,8 @@ class ExpDrawing {
         getHeight() / 2,
         0,
         this.radius,
-        this.getArcStart(!this.isLeft),
-        this.getArcStartEnd(!this.isLeft)
+        HALF_PI,
+        THREE_Q_CIRC
       )
       .noStroke()
     this.matchHalf.fill = color

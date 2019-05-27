@@ -10,6 +10,6 @@ bundle*
 main.min.css
 ngrok*
 ssl/
-public/**/*.html
-public/**/*.css
-public/**/*.js
+public/*.html
+public/*.css
+public/*.js

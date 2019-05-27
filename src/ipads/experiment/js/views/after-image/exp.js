@@ -56,31 +56,36 @@ class ControlsComponent extends ConnectedBaseComponent {
     this.state.activeTestBlock = testBlock
 
     if (isInduction(testBlock)) {
-      this.dotDrawing.resume()
-
-     //  this.state.isLeft = !this.state.isLeft
+      // this.dotDrawing.resume()
+      this.state.isLeft = !this.state.isLeft
       Drawing.drawInductionHalf(
         getRGBStringArray(testBlock.RGB_TEST_VALUES),
         this.state.isLeft
       )
       Drawing.drawMatchHalf(RGB_GREY_NEUTRAL)
     } else if (isMatch(testBlock)) {
+
       Drawing.drawInductionHalf(
-        this.payloadRGBString,
+        getRGBStringArray(this.state.activeTestBlock.WHITE),
         this.state.isLeft
       )
-      this.dotDrawing.pause()
-      Drawing.drawMatchHalf(RGB_GREY_NEUTRAL)
+      /*Drawing.drawInductionHalf(
+        this.payloadRGBString,
+        this.state.isLeft
+      )*/
+      // this.dotDrawing.pause()
+      // Drawing.drawMatchHalf(RGB_GREY_NEUTRAL)
     }
   }
 
   onStoreInterfaceUpdate(data) {
     this.state.interfaceData = data
     if (isMatch(this.state.activeTestBlock)) {
-      Drawing.updateInductionHalf(
+      Drawing.drawMatchHalf(getRGBStringArray(getRGBFromInterfacePayload(data)))
+      /*Drawing.updateInductionHalf(
         getRGBStringArray(getRGBFromInterfacePayload(data)),
         this.state.isLeft
-      )
+      )*/
     }
   }
 
