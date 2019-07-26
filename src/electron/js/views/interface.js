@@ -64,6 +64,15 @@ module.exports = (state, emit) => {
       },
       evt => emit('el:reload', evt.target.dataset.id),
      )}
+
+     ${renderButton(
+      {
+       text: 'Greyscale',
+       class: 'column col-auto mx-1 my-2',
+       id: 'grayscale',
+      },
+      evt => emit('el:greyscale', evt.target.dataset.id),
+     )}
     </div>
     <div class="u-flex full-wh">
      ${!state.testStarted && getActiveTestData(state)

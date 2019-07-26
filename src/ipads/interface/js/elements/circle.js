@@ -1,14 +1,14 @@
-import { cover, contain } from 'intrinsic-scale'
-import Nanocomponent from 'nanocomponent'
-import html from 'choo/html'
-import { autobind } from 'core-decorators'
-import { GREY_NEUTRAL, CIRCLE_MARGIN } from 'c:/constants'
-import AppEmitter from 'c:/emitter'
-import AppStore from 'c:/store'
-import { getRGBString } from 'i:lib/drawing-helpers'
+import { cover, contain } from "intrinsic-scale"
+import Nanocomponent from "nanocomponent"
+import html from "choo/html"
+import { autobind } from "core-decorators"
+import { GREY_NEUTRAL, CIRCLE_MARGIN } from "c:/constants"
+import AppEmitter from "c:/emitter"
+import AppStore from "c:/store"
+import { getRGBString } from "i:lib/drawing-helpers"
 import Canvas from "pad:/views/canvas"
-import GL from 'i:gl'
-import Logic from './circle-logic'
+import GL from "i:gl"
+import Logic from "./circle-logic"
 
 /*class Component extends Nanocomponent {
   constructor() {
@@ -66,10 +66,8 @@ function onLoad(el) {
   const canvas = el
   const parentNode = el.parentNode
   const s =
-    Math.min(
-      parentNode.offsetWidth,
-      parentNode.offsetHeight
-    ) - CIRCLE_MARGIN
+    Math.min(parentNode.offsetWidth, parentNode.offsetHeight) -
+    CIRCLE_MARGIN
   logic.init(el, { width: s, height: s })
 }
 
@@ -77,10 +75,11 @@ const canvas = new Canvas({ onLoad })
 
 module.exports = (state, emit) => {
   return html`
-        <article class="column h-100 interface-col circle-container" style="background-color: ${getRGBString(
-          GREY_NEUTRAL,
-        )}">
-          ${canvas.render(state, emit)}
-        </article>
-      `
+    <article
+      class="column h-100 interface-col circle-container"
+      style="background-color: ${getRGBString(GREY_NEUTRAL)}"
+    >
+      ${canvas.render(state, emit)}
+    </article>
+  `
 }

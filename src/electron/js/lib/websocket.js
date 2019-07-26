@@ -53,6 +53,9 @@ class WS extends WSBase {
   AppEmitter.on('ipads:reload', data => {
    this.send(data, 'master:reload')
   })
+  AppEmitter.on('ipads:greyscale', value => {
+   this.send(value, 'master:greyscale')
+  })
  }
 
  onopen() {

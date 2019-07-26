@@ -1,7 +1,11 @@
 import AppEmitter from "c:/emitter"
+import mousetrap from "mousetrap"
+import sono from "sono"
 import DateAndTime from "date-and-time"
+import { last } from "lodash"
 import {
   downloadJson,
+  CSVFromJSON,
   downloadCSVFromJSON,
   importFile,
 } from "c:/util"
@@ -42,21 +46,36 @@ const createTestResult = state => {
   let [red, green, blue] = getRGBFromInterfacePayload(
     getInterfaceTouches()
   )
-  red = Math.floor(red)
-  blue = Math.floor(blue)
-  green = Math.floor(green)
-  console.log(getActiveTestBlockData(state))
+  red = Math.max(Math.floor(red), 0)
+  blue = Math.max(Math.floor(blue), 0)
+  green = Math.max(Math.floor(green), 0)
   const colors = { red, green, blue }
   const test = getActiveTestBlockData(state)
   state.testResult.push({
     test,
     result: {
       name: test.TEST_NAME,
+      inductionDuration: test.STARE_DURATION,
       matchDuration: test.MATCH_DURATION,
+      restDuration: test.RESET_DURATION,
+      grey: test.BACKGROUND_GREY,
       testRGB: test.RGB_TEST_VALUES.join(" "),
       ...colors,
     },
   })
+  window.ipc.updateTest(
+    `${state.configName ||
+      `all_${DateAndTime.format(new Date(), `MM-DD`)}`}.json`,
+    JSON.stringify(state.testResult, null, 4)
+  )
+
+  CSVFromJSON(getTestResultsOnly(state)).then(csv =>
+    window.ipc.updateTest(
+      `${state.configName ||
+        `results_${DateAndTime.format(new Date(), `MM-DD`)}`}.csv`,
+      csv
+    )
+  )
 }
 
 export default async function(state, emitter) {
@@ -65,10 +84,12 @@ export default async function(state, emitter) {
   console.log(config)
   window.setInStore("test-config", JSON.stringify(config))
   //window.deleteInStore("test-config")
+  state.configName = ""
   state.activeTest = {}
   state.hostname = ""
   state.activeTestBlock = null
   state.testStarted = false
+  state.isGreyscale = false
   state.testsConfigs = config
   state.testResult = []
 
@@ -142,20 +163,22 @@ export default async function(state, emitter) {
     location.reload()
   })
 
+  emitter.on("el:greyscale", data => {
+    state.isGreyscale = !state.isGreyscale
+    AppEmitter.emit("ipads:greyscale", state.isGreyscale)
+  })
+
   AppEmitter.on("ipads:tests:start", data => {
     emitter.emit("render")
   })
 
-  /*AppEmitter.on('ipads:tests:update', data => {
-  state.activeTestBlock = {
-   ...data,
-   name: data.test.TEST_NAME,
-   test: JSON.stringify(data.test, null, 4),
-  }
-  emitter.emit('render')
- })*/
-
   AppEmitter.on("ipads:tests:stop", data => {})
+
+  const sound = sono.create("data/beep.wav")
+  sono.log()
+  AppEmitter.on("el:tests:beep", data => {
+    sound.play()
+  })
 
   /* ************
    *  config
@@ -165,6 +188,7 @@ export default async function(state, emitter) {
   })
   emitter.on("el:config:import", data => {
     importFile().then(file => {
+      state.configName = file.name
       var fr = new FileReader()
       fr.onload = function(e) {
         state.activeTest.data.phases = JSON.parse(e.target.result)
@@ -181,6 +205,17 @@ export default async function(state, emitter) {
       getTestResultsOnly(state),
       `results-${DateAndTime.format(new Date(), `YYYY/MM/DD HH:mm`)}`
     )
+  })
+
+  const goodOne = sono.create("data/good_one.wav", { volume: 1 })
+  const hair = sono.create("data/hair.wav", { volume: 1 })
+  mousetrap.bind(["command+1", "ctrl+1"], function() {
+    goodOne.play()
+    return false
+  })
+  mousetrap.bind(["command+2", "ctrl+2"], function() {
+    hair.play()
+    return false
   })
 
   window.getHostname(hostname => {

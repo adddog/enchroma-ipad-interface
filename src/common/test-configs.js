@@ -17,6 +17,7 @@ export const parseTestConfig = (config, sequence) => {
    leftCircleRGB: testBlock,
    rightCircleRGB: testBlock.BACKGROUND_GREY,
    isMatchingMode: false,
+   isInductionMode: true,
   })
 
   _time += testBlock.MATCH_DURATION
@@ -30,6 +31,7 @@ export const parseTestConfig = (config, sequence) => {
    leftCircleRGB: testBlock.WHITE,
    rightCircleRGB: testBlock.WHITE, // will be overwritten by UserColor
    isMatchingMode: true,
+   isInductionMode: false,
   })
 
   _time += testBlock.RESET_DURATION
@@ -47,6 +49,7 @@ export const parseTestConfig = (config, sequence) => {
     rightCircleRGB: testBlock.BACKGROUND_GREY,
     isResetingMode: true,
     isMatchingMode: false,
+    isInductionMode: false,
    })
   }
  })

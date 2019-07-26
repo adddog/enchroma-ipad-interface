@@ -14,7 +14,11 @@ const { format } = require("url")
 let ngrok
 console.log("process.env.NGROK ", process.env.NGROK)
 if (process.env.NGROK == "true") {
-  fs.chmodSync(path.join(__dirname, "ngrok"), "755")
+  try{
+    fs.chmodSync(path.join(__dirname, "ngrok"), "755")
+  }catch(e){
+
+  }
   const ngorkCmd = [
     "start",
     "enchroma",
@@ -38,6 +42,10 @@ function createWindow() {
     webPreferences: { webSecurity: false },
     width: IS_PROD ? 1200 : 1600,
     height: 800,
+  })
+
+  ipcMain.on("on-loaded", (event, arg) => {
+    event.sender.send("docs", app.getPath("documents"))
   })
 
   if (IS_PROD) {
@@ -126,6 +134,7 @@ function createWindow() {
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
+
 
 app.on("ready", createWindow)
 

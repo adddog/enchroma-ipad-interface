@@ -16,17 +16,14 @@ export default async function(state, emitter) {
     )
     emitter.emit("render")
   })
-
   AppEmitter.on("test:stop", data => {
     state.activeTest = null
     emitter.emit("render")
   })
-
   AppEmitter.on("test:pause", data => {
     state.paused = data
     emitter.emit("render")
   })
-
   AppEmitter.on("test:update", data => {
     if (state.activeTest) {
       state.waiting = false
@@ -34,7 +31,10 @@ export default async function(state, emitter) {
       emitter.emit("render")
     }
   })
-
+  AppEmitter.on("test:greyscale", data => {
+    state.isGreyscale = data
+    emitter.emit("render")
+  })
   AppEmitter.on("websocket:connected", () => {
     state.websocketConnected = true
     emitter.emit("render")

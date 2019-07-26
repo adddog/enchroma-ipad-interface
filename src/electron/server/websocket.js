@@ -68,6 +68,7 @@ module.exports = function({ server, port }) {
             sendMaster(data)
           }
           break
+        case "master:greyscale":
         case "master:reload":
         case "master:test:set":
         case "master:test:pause":

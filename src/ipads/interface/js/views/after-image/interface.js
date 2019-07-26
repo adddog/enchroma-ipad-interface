@@ -8,7 +8,7 @@ import Slider from 'i:elements/slider'
 module.exports = (state, emit) => {
   return html`
         <article class="w-100 h-100 black-80 columns interface-view" style="background-color: ${getRGBString(
-          GREY_NEUTRAL,
+          getRGBStringArray(getActiveTestBlock(state).BACKGROUND_GREY),
         )}">
           ${Slider(state, emit)}
           ${Circle(state, emit)}

@@ -96,20 +96,6 @@ class ControlsComponent extends ConnectedBaseComponent {
   @autobind
   addPreviousXY(testBlock) {
     return
-    console.log(testBlock)
-    console.log(
-      testBlock.previousXY[0] * this.diameter,
-      testBlock.previousXY[1] * this.diameter
-    )
-    const p = this.two.makeCircle(
-      getWidth() / 2 + testBlock.previousXY[0] * this.diameter,
-      getHeight() / 2 + testBlock.previousXY[1] * this.diameter,
-      9
-    )
-    p.fill = "red"
-    p.stroke = "red"
-    p.linewidth = 0
-    this.two.update()
   }
 
   @autobind

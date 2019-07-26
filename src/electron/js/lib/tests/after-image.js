@@ -15,6 +15,7 @@ export default function() {
       sequence: [],
       started: false,
       paused: false,
+      beeps: [false, false, false],
       index: 0,
     })
   resetState()
@@ -25,6 +26,13 @@ export default function() {
     return parseTestConfig(activeTest.data.phases, state.sequence)
   }
 
+  function emitBeep(timeElapsed, target, index) {
+    if (timeElapsed >= target && !state.beeps[index]) {
+      state.beeps[index] = true
+      AppEmitter.emit("el:tests:beep")
+    }
+  }
+
   function drawCanvas(delta) {
     var now = performance.now()
 
@@ -33,10 +41,19 @@ export default function() {
     //pick the testObject out
     var testObject = state.sequence[state.index]
     //short hand access
+    var isInductionMode = testObject.isInductionMode
     var isMatchingMode = testObject.isMatchingMode
     var isResetingMode = testObject.isResetingMode
-
     timeElapsed += delta
+    // RESET
+    if (isInductionMode && timeElapsed > testObject.endTime - 100) {
+      state.beeps = [false, false, false]
+    }
+    if (isMatchingMode && timeElapsed > testObject.endTime - 4000) {
+      emitBeep(timeElapsed, testObject.endTime - 3000, 0)
+      emitBeep(timeElapsed, testObject.endTime - 2000, 1)
+      emitBeep(timeElapsed, testObject.endTime - 1000, 2)
+    }
     if (
       timeElapsed > testObject.endTime &&
       state.index < state.sequence.length - 1

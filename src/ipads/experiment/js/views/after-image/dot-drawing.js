@@ -11,6 +11,8 @@ export default function drawDot(
 
   var physics = new Physics()
   var points = []
+  var positions = []
+  var particles = []
   var i = 0
   for (i = 0; i < numDots; i++) {
     var pct = i / numDots
@@ -29,13 +31,7 @@ export default function drawDot(
       bx,
       by
     )
-    var spring = physics.makeSpring(
-      particle,
-      origin,
-      strength,
-      drag,
-      0
-    )
+    physics.makeSpring(particle, origin, strength, drag, 0)
 
     origin.makeFixed()
 
@@ -47,7 +43,9 @@ export default function drawDot(
     particle.shape.noStroke().noFill()
     particle.position = particle.shape.translation
 
+    particles.push(particle)
     points.push(particle.position)
+    positions.push([bx,by])
   }
 
   var outer = new Two.Path(points, true, true).noStroke()
@@ -58,6 +56,14 @@ export default function drawDot(
 
   resize()
 
+  function tick() {
+    particles.forEach((s, i) => {
+        s.position.set(positions[i][0], positions[i][1])
+      if (s.resting()) {
+        console.log("reset!!")
+      }
+    })
+  }
   function update() {
     physics.update()
   }
@@ -79,6 +85,8 @@ export default function drawDot(
   }
 
   return {
+    tick,
+    update,
     pause,
     resume,
   }

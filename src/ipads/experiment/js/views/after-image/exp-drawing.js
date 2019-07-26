@@ -20,8 +20,9 @@ class ExpDrawing {
     this.inductionHalf
     this.matchHalf
     this.isLeft
-
-    this.group = two.makeGroup()
+  }
+  setGroup(group) {
+    this.group = group
   }
 
   getArcStart(isLeft = this.isLeft) {

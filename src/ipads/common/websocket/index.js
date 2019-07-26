@@ -8,15 +8,8 @@ import WebsocketHandlers from "pad:/websocket/handlers"
 class WS extends WSBase {
   init() {
     super.init()
-
     const _self = this
-
     this.client.onmessage = function(event) {
-      /* safeParse(event.data, (err, data) => {
-    console.log(err)
-    console.log(data)
-   })
-   return*/
       let socketData
       if (typeof event.data === "string") {
         try {
@@ -36,6 +29,9 @@ class WS extends WSBase {
         case "master:reload":
           window.location.reload()
           break
+        case "master:greyscale":
+          WebsocketHandlers.setGreyscale(data)
+          break
         case "master:test:set":
           console.log(type, data)
           WebsocketHandlers.testSet(data)
@@ -49,7 +45,6 @@ class WS extends WSBase {
           WebsocketHandlers.testStop(data)
           break
         case "master:test:update":
-          console.log(type, data)
           WebsocketHandlers.testUpdate(data)
           break
       }

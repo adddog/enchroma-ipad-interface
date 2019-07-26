@@ -1,4 +1,5 @@
 import html from "choo/html"
+import { getRGBStringArray } from "c:/util"
 import Nanocomponent from "nanocomponent"
 import { isDev, GREY_NEUTRAL } from "c:/constants"
 import renderButton from "c:/elements/button"
@@ -28,10 +29,14 @@ const renderExperiment = (state, emit) => {
 }
 
 module.exports = (state, emit) => {
+  console.log(getActiveTestBlock(state))
+  const expState = getActiveTestBlock(state) || {
+    BACKGROUND_GREY: GREY_NEUTRAL,
+  }
   return html`
     <article
       class="w-100 h-100 black-80 columns interface-view flex-c"
-      style="background-color: ${getRGBString(GREY_NEUTRAL)}"
+      style="background-color: ${getRGBString(expState.BACKGROUND_GREY)}"
     >
       ${renderExperiment(state, emit)}
       ${renderDevInterface(state, emit)}

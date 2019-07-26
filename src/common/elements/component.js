@@ -16,4 +16,8 @@ export default class BaseComponent extends Nanocomponent {
  unload(){
   AppEmitter.off('resize', this.resize)
  }
+
+ onPeramsUpdate(){
+
+ }
 }

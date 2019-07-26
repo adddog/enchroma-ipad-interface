@@ -31,6 +31,7 @@
 </body>
 <script>
 
+const { join } = require('path')
 const { spawn } = require('child_process')
 window.getHostname = function(cb) {
   const child = spawn('scutil', ['--get', 'LocalHostName'])
@@ -58,6 +59,11 @@ window.deleteInStore = function(k) {
 }
 
 window.IP = require('ip').address()
+
+
+  require(join(process.cwd(), 'ipc'))
+
+
 </script>
 <script src=bundle.js>
 </script>

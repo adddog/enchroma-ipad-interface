@@ -44,6 +44,15 @@ export function downloadJson(data, fileName) {
   document.body.removeChild(a)
 }
 
+export function CSVFromJSON(data, fileName) {
+  return new Promise(yes => {
+    jsonexport(data, function(err, csv) {
+      if (err) return console.log(err)
+      return yes(csv)
+    })
+  })
+}
+
 export function downloadCSVFromJSON(data, fileName) {
   jsonexport(data, function(err, csv) {
     if (err) return console.log(err)

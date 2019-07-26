@@ -9,7 +9,9 @@ export class ConnectedBaseComponent extends BaseComponent {
  load(el) {
   AppStore.on('store:test:update', () => {
    const testBlock = AppStore.getValue('test:update')
+   const isGreyscale = AppStore.getValue('test:greyscale')
    this.onStoreTestUpdate(testBlock)
+   this.onPeramsUpdate({isGreyscale})
   })
   AppStore.on('store:interface:update', () => {
    this.onStoreInterfaceUpdate(AppStore.getValue('interface:touches'))
