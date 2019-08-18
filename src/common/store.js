@@ -38,7 +38,6 @@ class Store {
  }
 
  testUpdate() {
-  console.log('testUpdate');
   AppEmitter.emit('store:test:update')
  }
 }

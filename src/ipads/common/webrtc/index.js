@@ -9,7 +9,7 @@ export default class WS {
     this.peer = new SocketPeer({
       pairCode: "enchroma",
       url: WS_URL,
-      debug: false,
+      debug: true,
     })
 
     this.peer.on("connect", this.onConnect)
@@ -54,7 +54,6 @@ export default class WS {
 
   @autobind
   onRtcSignal() {
-    console.log("WebRTC signalling")
     AppEmitter.emit("logs", "WebRTC signalling")
   }
 

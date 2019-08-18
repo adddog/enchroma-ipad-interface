@@ -34,6 +34,7 @@ async function loadConfig(state) {
 }
 
 const createTestResult = state => {
+  console.log(state)
   if (!isMatch(getActiveTestBlockData(state))) {
     return
   }
@@ -44,8 +45,10 @@ const createTestResult = state => {
     return
   }
   let [red, green, blue] = getRGBFromInterfacePayload(
-    getInterfaceTouches()
+    getInterfaceTouches(),
+    state.isGreyscale
   )
+
   red = Math.max(Math.floor(red), 0)
   blue = Math.max(Math.floor(blue), 0)
   green = Math.max(Math.floor(green), 0)

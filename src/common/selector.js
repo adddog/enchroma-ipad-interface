@@ -6,12 +6,27 @@ import AppStore from "c:/store"
 export const getWidth = () => AppStore.getValue("res").width
 export const getHeight = () => AppStore.getValue("res").height
 export const getRes = () => AppStore.getValue("res")
-export const getRGBFromInterfacePayload = payload => {
+
+export const getRGBFromInterfacePayload = (
+  payload,
+  isGreyscale = AppStore.getValue("isGreyscale")
+) => {
   if (!AppStore.getValue("interface:touches") && !payload) return
-  const [deg, r, red, green, blue] =
-    payload || AppStore.getValue("interface:touches")
-  return [red, green, blue]
+  const touches = payload || AppStore.getValue("interface:touches")
+
+  return isGreyscale
+    ? getGreyscaleFromInterfacePayload(touches)
+    : getColorFromInterfacePayload(touches)
 }
+export const getColorFromInterfacePayload = payload => {
+  const [rad, phi, r, g, b] = payload
+  return [r, g, b]
+}
+export const getGreyscaleFromInterfacePayload = payload => {
+  const c = Math.floor(payload[8][0] * 2 * 255)
+  return [c, c, c]
+}
+
 export const getXYFromInterfacePayload = payload => {
   if (!AppStore.getValue("interface:touches") && !payload)
     return [0, 0]

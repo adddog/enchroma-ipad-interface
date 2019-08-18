@@ -15,6 +15,7 @@ import AppStore from "c:/store"
 import {
   getRes,
   getRGBFromInterfacePayload,
+  getGreyscaleFromInterfacePayload,
   getXYFromInterfacePayload,
   getHeight,
   getWidth,
@@ -105,13 +106,17 @@ class ControlsComponent extends ConnectedBaseComponent {
   }
 
   onPeramsUpdate(data) {
-    console.log(data);
+    this.state = { ...this.state, ...data }
   }
+
+  /* ------------------------
+  //  UPDATING COORDS
+   ------------------------ */
   onStoreInterfaceUpdate(data) {
     this.state.interfaceData = data
     if (isMatch(this.state.activeTestBlock)) {
       Drawing.drawMatchHalf(
-        getRGBStringArray(getRGBFromInterfacePayload(data))
+        getRGBStringArray(getRGBFromInterfacePayload(data, this.state.isGreyscale))
       )
       /*Drawing.updateInductionHalf(
         getRGBStringArray(getRGBFromInterfacePayload(data)),
