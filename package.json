@@ -80,7 +80,7 @@
     "cssnano-cli": "^1.0.5",
     "ejs": "^2.6.2",
     "ejs-cli": "^2.0.0",
-    "electron": "4",
+    "electron": "9",
     "electron-builder": "^21.1.5",
     "envify": "^4.1.0",
     "fastclick": "^1.0.6",
