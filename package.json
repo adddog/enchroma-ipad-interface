@@ -27,7 +27,7 @@
     "rimraf": "^2.6.3",
     "socketpeer": "^1.1.0",
     "sono": "git://github.com/adddog/sono.git#master",
-    "ws": "^7.1.1"
+    "ws": "^7.4.6"
   },
   "scripts": {
     "prestart": "npm-run-all -l -s copy-files:interface copy-files:experiment copy-files:electron",
