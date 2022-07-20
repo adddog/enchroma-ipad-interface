@@ -102,7 +102,7 @@
     "safe-json-parse": "^4.0.0",
     "spectre.css": "^0.5.8",
     "tachyons": "^4.11.1",
-    "terser": "^4.1.2",
+    "terser": "^4.8.1",
     "touches": "^1.2.2",
     "two.js": "^0.7.0-beta.3",
     "whatwg-fetch": "^3.0.0"
