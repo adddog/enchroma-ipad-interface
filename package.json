@@ -13,7 +13,7 @@
     "dotenv": "^6.1.0",
     "electron-store": "^4.0.0",
     "env-cmd": "^9.0.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "fast-json-parse": "^1.0.3",
     "fast-safe-stringify": "^2.0.6",
     "incstr": "^1.2.3",
